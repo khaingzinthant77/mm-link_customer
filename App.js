@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+//import screen
+import RootNavigator from "@navigators/RootNavigator";
+//import color
+import Colors from "@styles/Colors";
+//import font
+import * as Font from "expo-font";
+const App = () => {
+  const [font_loaded, setFontLoaded] = useState(false);
+  useEffect(() => {
+    loadCustomFonts();
+  }, []);
 
-export default function App() {
+  const loadCustomFonts = async () => {
+    try {
+      let primaryFont = require("@fonts/myanmar-sagar.ttf");
+      let primaryFontBold = require("@fonts/myanmar-sagar.ttf");
+
+      await Font.loadAsync({
+        "Primary-Font": primaryFont,
+        "Primary-Font-Bold": primaryFontBold,
+      });
+      setFontLoaded(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      
+      {font_loaded ? (
+        <RootNavigator />
+      ) : (
+        <View
+          style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
+        >
+          <ActivityIndicator size={"large"} color={Colors.theme_color} />
+        </View>
+      )}
+      <StatusBar backgroundColor={Colors.theme_color}/>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
