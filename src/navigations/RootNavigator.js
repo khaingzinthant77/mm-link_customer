@@ -6,6 +6,8 @@ import HomeScreen from "@screens/home/HomeScreen";
 //hotspot
 //hotspot authentication
 import SignIn from "@screens/hotspot/hotspot_auth/SignIn";
+//hotspot dashboard
+import HotspotDashboard from "@screens/hotspot/HotspotDashboard";
 
 function RootNavigator() {
   return (
@@ -18,6 +20,11 @@ function RootNavigator() {
       <Stack.Screen
         name="SignIn"
         component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HotspotDashboard"
+        component={HotspotDashboard}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

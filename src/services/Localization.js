@@ -1,5 +1,5 @@
-import * as Localization from "expo-localization";
-import { I18n } from "i18n-js";
+import { getLocales } from 'expo-localization';
+import { I18n } from 'i18n-js';
 
 //import Services
 import { getItem } from "@services/Storage";
@@ -20,8 +20,9 @@ const translations = {
     forget_password: "Forget your password?",
     pwd_recovery: "Password Recovery",
     forget_pwd: "Forget Password",
+    
     //Home
-    topup_user: "Topup User",
+    hotspot_user: "Hotspot User",
     fiber_user: "WiFi/Fiber User",
     check_internet_access: "CHECK INTERNET ACCESS",
     how_to_use: "How to used (Video) and (PDF)",
@@ -178,7 +179,7 @@ const translations = {
     hp_login: "Hotspot Login",
 
     //Home
-    topup_user: "ငွေဖြည့်ကဒ် အသုံးပြုသူ",
+    hotspot_user: "Hotspot အသုံးပြုသူ",
     fiber_user: "ဝိုင်ဖိုင်၊ ဖိုင်ဘာ အသုံးပြုသူ",
     check_internet_access: "အင်တာနက်ရ၊မရစစ်ဆေးပါ",
     how_to_use: "အသုံးပြုပုံများကြည့်ရန်",
@@ -328,15 +329,7 @@ const translations = {
 };
 const i18n = new I18n(translations);
 
-// Set the locale once at the beginning of your app.
-i18n.locale = Localization.locale;
-
-// When a value is missing from a language it'll fall back to another language with the key present.
-i18n.enableFallback = true;
-export const t = (scope, locale) => {
-  // console.log(locale)
-  return i18n.t(scope, { locale: locale });
-};
+i18n.locale = getLocales()[0].languageCode;
 
 export const getLang = async () => {
   // console.log(await Localization.getLocalizationAsync());

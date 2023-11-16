@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,17 +9,56 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
+//import library
 import AsyncStorage from "@react-native-async-storage/async-storage";
-//import style
-import Styles from "@styles/Styles";
+import axios from "axios";
+import appjson from "@appjson";
 //import color
 import Colors from "@styles/Colors";
 //import font
 import Fonts from "@styles/Fonts";
-import appjson from "@appjson";
+//import Services
+
 const HomeScreen = ({ navigation }) => {
+  const [locale, setLocale] = useState(null);
   const [user_name, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    getEndPoint();
+  }, []);
+
+  getEndPoint = async () => {
+    axios
+      .get("https://news.mm-link.net/api/setting_url")
+      .then((response) => {
+        if (response.data.data.url !== null) {
+          var myendpoint = response.data.data.url;
+          var is_show_hide = response.data.data.is_show_register;
+
+          AsyncStorage.multiSet(
+            [
+              ["endpoint", myendpoint],
+              ["show_hide", is_show_hide.toString()],
+            ],
+            (err) => {
+              if (err) {
+                alert("Asynstorage Error");
+              }
+            }
+          );
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // const res = await getLang();
+    // setLocale(res);
+  };
 
   hotspotLogin = async () => {
     const tusername = await AsyncStorage.getItem("tusername");
@@ -28,9 +67,7 @@ const HomeScreen = ({ navigation }) => {
     if (tusername != null && tpassword != null) {
       setUserName(tusername);
       setPassword(tpassword);
-      navigation.navigate("Dashboard", {
-        type: "topup",
-      });
+      navigation.navigate("HotspotDashboard");
     } else {
       navigation.navigate("SignIn");
     }
@@ -93,7 +130,7 @@ const HomeScreen = ({ navigation }) => {
             style={styles.img}
           ></Image>
           <Text allowFontScaling={false} style={[styles.text_style]}>
-            WiFi/Fiber User
+            Wifi/Fiber User
           </Text>
         </TouchableOpacity>
       </View>
@@ -120,7 +157,7 @@ const HomeScreen = ({ navigation }) => {
           style={{ marginBottom: 10, marginTop: 5 }}
         >
           <Text allowFontScaling={false} style={{ color: "#0B93FB" }}>
-            How to used App (Video)
+            How to use (Video)
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -134,7 +171,7 @@ const HomeScreen = ({ navigation }) => {
           style={{ marginBottom: 10 }}
         >
           <Text allowFontScaling={false} style={{ color: "#FA0505" }}>
-            Own by IT Spectrum Co., Ltd.
+            IT Spectrum Co., Ltd.
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
