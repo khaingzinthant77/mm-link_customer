@@ -381,7 +381,7 @@ const HotspotDashboard = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.cardinnerContainer, Styles.box_shadow]}
             onPress={() =>
-              navigation.navigate("AgentTownship", {
+              navigation.navigate("AvailableTownship", {
                 username: user_name,
                 password: password,
                 phoneNo: usrPh,
