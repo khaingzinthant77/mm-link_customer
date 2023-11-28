@@ -18,3 +18,15 @@ export const nearestAgentApi = "/api/get_nearest_agent";
 
 //agent list by township api
 export const tshAgentApi = "/api/agents_list";
+
+//get buy packages
+export const getPackageApi = "/api/data";
+
+//check account exit or not
+export const checkAccApi = "/api/check_hotspot_user";
+
+//buy package with payment
+export const hotspotPaymentApi = "/api/hotspotMakePayment";
+
+//payment show / hide api
+export const paymentApi = "/api/getConfig";

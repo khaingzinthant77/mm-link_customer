@@ -403,8 +403,8 @@ const HotspotDashboard = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.cardinnerContainer, Styles.box_shadow]}
             onPress={() =>
-              navigation.navigate("PackageList", {
-                username: user_name,
+              navigation.navigate("BuyPackage", {
+                username: usrPh,
                 password: password,
               })
             }

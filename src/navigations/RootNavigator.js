@@ -19,6 +19,9 @@ import NearlyAgent from "@screens/hotspot/agent/NearlyAgent";
 import AgentMap from "@screens/hotspot/agent/AgentMap";
 //agent detail
 import AgentDetail from "@screens/hotspot/agent/AgentDetail";
+//package module
+//buy package
+import BuyPackage from "@screens/hotspot/package/BuyPackage";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -60,6 +63,11 @@ function RootNavigator() {
       <Stack.Screen
         name="AgentDetail"
         component={AgentDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BuyPackage"
+        component={BuyPackage}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
