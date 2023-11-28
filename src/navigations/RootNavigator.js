@@ -22,6 +22,9 @@ import AgentDetail from "@screens/hotspot/agent/AgentDetail";
 //package module
 //buy package
 import BuyPackage from "@screens/hotspot/package/BuyPackage";
+//usage history
+import Usage from "@screens/hotspot/usageHistory/Usage";
+
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -68,6 +71,11 @@ function RootNavigator() {
       <Stack.Screen
         name="BuyPackage"
         component={BuyPackage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Usage"
+        component={Usage}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

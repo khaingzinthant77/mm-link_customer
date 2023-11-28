@@ -30,3 +30,7 @@ export const hotspotPaymentApi = "/api/hotspotMakePayment";
 
 //payment show / hide api
 export const paymentApi = "/api/getConfig";
+
+//usageHistory
+export const usageHistoryURL =
+  "https://hs-aaa.mm-link.net/user.php?cont=traffic_report";

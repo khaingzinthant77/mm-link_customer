@@ -426,8 +426,8 @@ const HotspotDashboard = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.cardinnerContainer, Styles.box_shadow]}
             onPress={() =>
-              navigation.navigate("UsageHistory", {
-                username: user_name,
+              navigation.navigate("Usage", {
+                username: usrPh,
                 password: password,
               })
             }
