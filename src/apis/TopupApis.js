@@ -34,3 +34,6 @@ export const paymentApi = "/api/getConfig";
 //usageHistory
 export const usageHistoryURL =
   "https://hs-aaa.mm-link.net/user.php?cont=traffic_report";
+
+//topup data history
+export const topupDataHistoryApi = "/api/topupDataHistory";

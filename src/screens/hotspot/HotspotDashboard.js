@@ -58,6 +58,7 @@ const HotspotDashboard = ({ navigation }) => {
   }, [user_name, balance]);
 
   fetchData = async () => {
+    // await AsyncStorage.clear();
     var topupEndPoint = await AsyncStorage.getItem("endpoint");
 
     var loginApiurl = topupEndPoint + loginApi;
@@ -444,7 +445,7 @@ const HotspotDashboard = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.cardinnerContainer, Styles.box_shadow]}
             onPress={() =>
-              navigation.navigate("DataTopup", {
+              navigation.navigate("TopupHistoryList", {
                 username: user_name,
                 password: password,
               })

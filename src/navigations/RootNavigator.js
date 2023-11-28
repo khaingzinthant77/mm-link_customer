@@ -24,6 +24,11 @@ import AgentDetail from "@screens/hotspot/agent/AgentDetail";
 import BuyPackage from "@screens/hotspot/package/BuyPackage";
 //usage history
 import Usage from "@screens/hotspot/usageHistory/Usage";
+//topup history module
+//topup history list
+import TopupHistoryList from "@screens/hotspot/topupHistory/TopupHistoryList";
+//history detail
+import HistoryDetail from "@screens/hotspot/topupHistory/HistoryDetail";
 
 function RootNavigator() {
   return (
@@ -76,6 +81,16 @@ function RootNavigator() {
       <Stack.Screen
         name="Usage"
         component={Usage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="TopupHistoryList"
+        component={TopupHistoryList}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HistoryDetail"
+        component={HistoryDetail}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
