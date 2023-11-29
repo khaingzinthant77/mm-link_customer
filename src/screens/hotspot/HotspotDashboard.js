@@ -175,8 +175,6 @@ const HotspotDashboard = ({ navigation }) => {
     bgWidth = 8;
   }
   const MAX_POINTS = 500;
-  let dbgColor = "#808080";
-  let dbgWidth = 4;
   const fill = (remain_point / MAX_POINTS) * 100;
   return (
     <View style={styles.container}>
@@ -464,7 +462,7 @@ const HotspotDashboard = ({ navigation }) => {
         <View style={[styles.cardContainer, { marginBottom: 20 }]}>
           <TouchableOpacity
             style={[styles.cardinnerContainer, Styles.box_shadow]}
-            onPress={() => navigation.navigate("TopupNews")}
+            onPress={() => navigation.navigate("NewsList")}
             activeOpacity={0.8}
           >
             <Image

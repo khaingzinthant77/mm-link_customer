@@ -29,6 +29,10 @@ import Usage from "@screens/hotspot/usageHistory/Usage";
 import TopupHistoryList from "@screens/hotspot/topupHistory/TopupHistoryList";
 //history detail
 import HistoryDetail from "@screens/hotspot/topupHistory/HistoryDetail";
+//topup news list
+import NewsList from "@screens/hotspot/news/NewsList";
+//news detail
+import NewsDetail from "@screens/hotspot/news/NewsDetail";
 
 function RootNavigator() {
   return (
@@ -91,6 +95,16 @@ function RootNavigator() {
       <Stack.Screen
         name="HistoryDetail"
         component={HistoryDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NewsList"
+        component={NewsList}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NewsDetail"
+        component={NewsDetail}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
