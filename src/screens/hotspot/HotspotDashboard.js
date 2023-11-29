@@ -176,6 +176,14 @@ const HotspotDashboard = ({ navigation }) => {
   }
   const MAX_POINTS = 500;
   const fill = (remain_point / MAX_POINTS) * 100;
+
+  go_hotspotLogin = async () => {
+    navigation.navigate("HotspotLogin", {
+      username: usrPh,
+      password: password,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.theme_color} />
@@ -262,7 +270,7 @@ const HotspotDashboard = ({ navigation }) => {
                 style={{ marginRight: 10 }}
                 color="green"
               />
-              <TouchableOpacity onPress={() => this.go_hotspotLogin()}>
+              <TouchableOpacity onPress={() => go_hotspotLogin()}>
                 <Text allowFontScaling={false} style={styles.text_style}>
                   Hotspot Login
                 </Text>

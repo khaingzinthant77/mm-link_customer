@@ -12,8 +12,12 @@ import HomeScreen from "@screens/home/HomeScreen";
 import SignIn from "@screens/hotspot/hotspot_auth/SignIn";
 //hotspot dashboard
 import HotspotDashboard from "@screens/hotspot/HotspotDashboard";
+//hotspot login to webview
+import HotspotLogin from "@screens/hotspot/hotspot_auth/HotspotLogin";
+//hotspot logout from webview
+import HotspotLogout from "@screens/hotspot/hotspot_auth/HotspotLogout";
 //data transfer
-import Transfer from "../screens/hotspot/dataTransfer/Transfer";
+import Transfer from "@screens/hotspot/dataTransfer/Transfer";
 //agent
 //agent available township
 import AvailableTownship from "@screens/hotspot/agent/AvailableTownship";
@@ -58,6 +62,44 @@ function RootNavigator() {
         name="HotspotDashboard"
         component={HotspotDashboard}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HotspotLogin"
+        component={HotspotLogin}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HotspotLogout"
+        component={HotspotLogout}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Transfer"
+        component={Transfer}
+        options={{
+          header: ({ navigation }) => (
+            <TopupHeader
+              backgroundColor={Colors.theme_color}
+              headerText="Data Transfer"
+              onPressBack={() => navigation.navigate("HotspotDashboard")}
+              showSetting={false}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="PointNavigator"
+        component={PointNavigator}
+        options={{
+          header: ({ navigation }) => (
+            <TopupHeader
+              backgroundColor={Colors.theme_color}
+              headerText="Point Transaction"
+              onPressBack={() => navigation.navigate("HotspotDashboard")}
+              showSetting={false}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="AvailableTownship"
@@ -122,34 +164,6 @@ function RootNavigator() {
         name="NewsDetail"
         component={NewsDetail}
         options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="PointNavigator"
-        component={PointNavigator}
-        options={{
-          header: ({ navigation }) => (
-            <TopupHeader
-              backgroundColor={Colors.theme_color}
-              headerText="Point Transaction"
-              onPressBack={() => navigation.navigate("HotspotDashboard")}
-              showSetting={false}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="Transfer"
-        component={Transfer}
-        options={{
-          header: ({ navigation }) => (
-            <TopupHeader
-              backgroundColor={Colors.theme_color}
-              headerText="Data Transfer"
-              onPressBack={() => navigation.navigate("HotspotDashboard")}
-              showSetting={false}
-            />
-          ),
-        }}
       />
     </Stack.Navigator>
   );
