@@ -37,3 +37,9 @@ export const usageHistoryURL =
 
 //topup data history
 export const topupDataHistoryApi = "/api/topupDataHistory";
+
+//point history
+export const pointHistoryApi = "/api/pointHistory";
+
+//redeem history
+export const redeemHistoryApi = "/api/redeemHistory";

@@ -12,6 +12,7 @@
     "@react-native-async-storage/async-storage": "^1.19.4",
     "@react-native-community/netinfo": "^10.0.0",
     "@react-native-masked-view/masked-view": "0.2.9",
+    "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
     "@rneui/themed": "^4.0.0-rc.8",
@@ -40,8 +41,10 @@
     "react-native-safe-area-context": "^4.6.3",
     "react-native-screens": "~3.22.0",
     "react-native-svg": "^13.14.0",
+    "react-native-tab-view": "^3.5.2",
     "react-native-vector-icons": "^10.0.1",
-    "react-native-webview": "^13.6.3"
+    "react-native-webview": "^13.6.3",
+    "react-native-pager-view": "6.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

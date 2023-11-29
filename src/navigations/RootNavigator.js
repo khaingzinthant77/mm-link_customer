@@ -1,4 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
+//import component
+import TopupHeader from "@components/TopupHeader";
+//import color
+import Colors from "@styles/Colors";
 
 const Stack = createStackNavigator();
 //import screen
@@ -33,7 +37,8 @@ import HistoryDetail from "@screens/hotspot/topupHistory/HistoryDetail";
 import NewsList from "@screens/hotspot/news/NewsList";
 //news detail
 import NewsDetail from "@screens/hotspot/news/NewsDetail";
-
+//point transaction module
+import PointNavigator from "./PointNavigator";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -106,6 +111,20 @@ function RootNavigator() {
         name="NewsDetail"
         component={NewsDetail}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PointNavigator"
+        component={PointNavigator}
+        options={{
+          header: ({ navigation }) => (
+            <TopupHeader
+              backgroundColor={Colors.theme_color}
+              headerText="Point Transaction"
+              onPressBack={() => navigation.navigate("HotspotDashboard")}
+              showSetting={false}
+            />
+          ),
+        }}
       />
     </Stack.Navigator>
   );
