@@ -12,6 +12,8 @@ import HomeScreen from "@screens/home/HomeScreen";
 import SignIn from "@screens/hotspot/hotspot_auth/SignIn";
 //hotspot dashboard
 import HotspotDashboard from "@screens/hotspot/HotspotDashboard";
+//data transfer
+import Transfer from "../screens/hotspot/dataTransfer/Transfer";
 //agent
 //agent available township
 import AvailableTownship from "@screens/hotspot/agent/AvailableTownship";
@@ -95,7 +97,16 @@ function RootNavigator() {
       <Stack.Screen
         name="TopupHistoryList"
         component={TopupHistoryList}
-        options={{ headerShown: false }}
+        options={{
+          header: ({ navigation }) => (
+            <TopupHeader
+              backgroundColor={Colors.theme_color}
+              headerText="Topup History"
+              onPressBack={() => navigation.navigate("HotspotDashboard")}
+              showSetting={false}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="HistoryDetail"
@@ -120,6 +131,20 @@ function RootNavigator() {
             <TopupHeader
               backgroundColor={Colors.theme_color}
               headerText="Point Transaction"
+              onPressBack={() => navigation.navigate("HotspotDashboard")}
+              showSetting={false}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Transfer"
+        component={Transfer}
+        options={{
+          header: ({ navigation }) => (
+            <TopupHeader
+              backgroundColor={Colors.theme_color}
+              headerText="Data Transfer"
               onPressBack={() => navigation.navigate("HotspotDashboard")}
               showSetting={false}
             />

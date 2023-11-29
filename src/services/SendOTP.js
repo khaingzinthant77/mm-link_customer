@@ -1,6 +1,5 @@
 import axios from "axios";
-import { sendSMSApi } from "@apis/TopupApi";
-
+import { SEND_SMS_API } from "@env";
 const generateRandomSixDigitNumber = () => {
   const min = 100000; // Minimum 6-digit number
   const max = 999999; // Maximum 6-digit number
@@ -22,7 +21,7 @@ export const SendOTP = async (phone) => {
   };
 
   try {
-    const response = await axios.post(sendSMSApi, param, {
+    const response = await axios.post(SEND_SMS_API, param, {
       headers: headerBody,
     });
 

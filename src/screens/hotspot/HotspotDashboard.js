@@ -299,8 +299,8 @@ const HotspotDashboard = ({ navigation }) => {
           <TouchableOpacity
             style={styles.progressContainer}
             onPress={() =>
-              navigation.navigate("TransferTab", {
-                username: user_name,
+              navigation.navigate("Transfer", {
+                username: usrPh,
               })
             }
           >

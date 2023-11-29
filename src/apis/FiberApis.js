@@ -61,9 +61,6 @@ export const resetPasswordApi = "/api/resetPassword";
 //data transfer api
 export const dataTransferApi = "/api/data_transfer";
 
-//sms send api
-export const sendSMSApi = "http://smsgo.linnit.io/api/sendOtp";
-
 //transfer history api
 export const transferHistoryApi = "/api/dataTransferHistory";
 
