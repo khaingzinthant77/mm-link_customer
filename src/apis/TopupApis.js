@@ -49,3 +49,6 @@ export const dataTransferApi = "/api/data_transfer";
 
 //transfer history api
 export const transferHistoryApi = "/api/dataTransferHistory";
+
+//point redeem api
+export const redeemApi = "/api/redeemPoint";

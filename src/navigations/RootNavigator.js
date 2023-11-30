@@ -18,6 +18,8 @@ import HotspotLogin from "@screens/hotspot/hotspot_auth/HotspotLogin";
 import HotspotLogout from "@screens/hotspot/hotspot_auth/HotspotLogout";
 //data transfer
 import Transfer from "@screens/hotspot/dataTransfer/Transfer";
+//point list
+import PointList from "@screens/hotspot/point/PointList";
 //agent
 //agent available township
 import AvailableTownship from "@screens/hotspot/agent/AvailableTownship";
@@ -81,6 +83,20 @@ function RootNavigator() {
             <TopupHeader
               backgroundColor={Colors.theme_color}
               headerText="Data Transfer"
+              onPressBack={() => navigation.navigate("HotspotDashboard")}
+              showSetting={false}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="PointList"
+        component={PointList}
+        options={{
+          header: ({ navigation }) => (
+            <TopupHeader
+              backgroundColor={Colors.theme_color}
+              headerText="Point"
               onPressBack={() => navigation.navigate("HotspotDashboard")}
               showSetting={false}
             />

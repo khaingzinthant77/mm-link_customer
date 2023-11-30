@@ -348,7 +348,7 @@ const HotspotDashboard = ({ navigation }) => {
             }}
             activeOpacity={0.8}
             onPress={() =>
-              navigation.navigate("AvailablePoint", {
+              navigation.navigate("PointList", {
                 remain_point: remain_point,
               })
             }
