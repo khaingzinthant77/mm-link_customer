@@ -10,6 +10,12 @@ import HomeScreen from "@screens/home/HomeScreen";
 //hotspot
 //hotspot authentication
 import SignIn from "@screens/hotspot/hotspot_auth/SignIn";
+//hotspot forget
+import Forget from "@screens/hotspot/hotspot_auth/Forget";
+//hotspot otp screen
+import HotspotOTP from "@screens/hotspot/hotspot_auth/HotspotOTP";
+//hotspot register
+import SignUp from "@screens/hotspot/hotspot_auth/SignUp";
 //hotspot dashboard
 import HotspotDashboard from "@screens/hotspot/HotspotDashboard";
 //hotspot login to webview
@@ -66,6 +72,21 @@ function RootNavigator() {
       <Stack.Screen
         name="SignIn"
         component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Forget"
+        component={Forget}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HotspotOTP"
+        component={HotspotOTP}
         options={{ headerShown: false }}
       />
       <Stack.Screen

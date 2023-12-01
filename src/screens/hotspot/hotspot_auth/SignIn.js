@@ -265,7 +265,7 @@ const SignIn = ({ navigation }) => {
                 </View>
                 <View style={[styles.textBoxCon, { marginTop: 30 }]}>
                   <View style={styles.at}>
-                    <SvgIcon icon={"lock"} width={20} height={20} />
+                    <SvgIcon icon={"pwd_lock"} width={20} height={20} />
                   </View>
                   <View style={[styles.passCon]}>
                     <View style={styles.textCon}>
@@ -298,9 +298,9 @@ const SignIn = ({ navigation }) => {
 
                 <View style={styles.forgotAction}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate("HotspotForgotPassword")}
+                    onPress={() => navigation.navigate("Forget")}
                   >
-                    <Text style={styles.forgotLbl}>Forgot Password?</Text>
+                    <Text style={styles.forgotLbl}>Forget Password?</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -321,9 +321,7 @@ const SignIn = ({ navigation }) => {
                   </View>
                   <View style={styles.registerCon}>
                     <Text style={styles.registerNew}>New User? </Text>
-                    <Pressable
-                      onPress={() => navigation.navigate("HotspotRegister")}
-                    >
+                    <Pressable onPress={() => navigation.navigate("SignUp")}>
                       <Text style={styles.registerLbl}>Register</Text>
                     </Pressable>
                   </View>
