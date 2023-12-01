@@ -193,7 +193,7 @@ const HotspotDashboard = ({ navigation }) => {
           navigation.navigate("HomeScreen", { popup_status: true })
         }
         showSetting={true}
-        onPressSetting={() => navigation.navigate("TopupSetting")}
+        onPressSetting={() => navigation.navigate("HotspotSetting")}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}

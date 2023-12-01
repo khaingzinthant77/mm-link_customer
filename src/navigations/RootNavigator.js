@@ -47,6 +47,14 @@ import NewsList from "@screens/hotspot/news/NewsList";
 import NewsDetail from "@screens/hotspot/news/NewsDetail";
 //point transaction module
 import PointNavigator from "./PointNavigator";
+//hotspot setting
+import HotspotSetting from "@screens/hotspot/setting/HotspotSetting";
+//hotspot profile
+import Profile from "@screens/hotspot/setting/Profile";
+//hotspot contact
+import HotspotContact from "@screens/hotspot/setting/HotspotContact";
+//change password
+import ChangePassword from "@screens/hotspot/setting/ChangePassword";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -179,6 +187,26 @@ function RootNavigator() {
       <Stack.Screen
         name="NewsDetail"
         component={NewsDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HotspotSetting"
+        component={HotspotSetting}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HotspotContact"
+        component={HotspotContact}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

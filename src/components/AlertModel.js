@@ -68,7 +68,7 @@ export default class AlertModel extends React.Component {
                   onPress={() => this._handleAction()}
                 >
                   <Text allowFontScaling={false} style={styles.btnText}>
-                    {this.props.btn_text ? this.props.btn_text : Yes}
+                    {this.props.btn_text ? this.props.btn_text : "Yes"}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -78,7 +78,7 @@ export default class AlertModel extends React.Component {
                 onPress={() => this._handleAction()}
               >
                 <Text allowFontScaling={false} style={styles.btnText}>
-                  {this.props.btn_text ? this.props.btn_text : Yes}
+                  {this.props.btn_text ? this.props.btn_text : "Yes"}
                 </Text>
               </TouchableOpacity>
             )}
