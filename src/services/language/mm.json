@@ -23,6 +23,7 @@
   "point_transaction": "Point Transaction",
   "point": "ပွိုင့်",
   "inquiry": "Inquiry Form",
+  "near_agent": "အနီးဆုံး Agentများ",
 
   "install_date": "တပ်ဆင်သည့်ရက်စွဲ",
   "total_using": "အသုံးပြုမှု စုစုပေါင်း",
@@ -117,7 +118,7 @@
   "topregister": "သင်ဟာအသုံးပြုသူအသစ်ဖြစ်လျှင်မှတ်ပုံတင်ပါ",
   "data": "ဒေတာ",
   "topup": "ငွေဖြည့်ရန်",
-  "buy_package": "ဝယ်ရန်",
+  "buy_package": "ပက်ကေ့ဒ် ဝယ်ရန်",
   "news": "သတင်းများ",
   "topup_history": "ငွေဖြည့် မှတ်တမ်းများ",
   "usage_history": "အသုံးပြုမှု မှတ်တမ်းများ",

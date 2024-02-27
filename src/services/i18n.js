@@ -11,7 +11,7 @@ export const initializeLocalization = async () => {
       en: { translation: en },
       mm: { translation: mm },
     },
-    lng: (await AsyncStorage.getItem("language")) || "mm",
+    lng: (await AsyncStorage.getItem("language")) || "en",
     fallbackLng: "en",
     interpolation: {
       escapeValue: false,

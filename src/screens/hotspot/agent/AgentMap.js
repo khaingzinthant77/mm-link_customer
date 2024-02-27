@@ -29,9 +29,7 @@ const AgentMap = ({ navigation }) => {
       <TopupHeader
         backgroundColor="#337ab7"
         headerText={route.params.data.business_name}
-        onPressBack={() =>
-          navigation.navigate(back_route, { tsh_name: tsh_name, data: data })
-        }
+        onPressBack={() => navigation.goBack(null)}
         showSetting={false}
       />
       <MapView

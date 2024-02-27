@@ -97,7 +97,7 @@ const BuyPackage = ({ navigation }) => {
   };
 
   handle_buy_package = () => {
-    var isError = false;
+    let isError = false;
     if (!phone) {
       setErrorPhone(true);
       isError = true;
@@ -131,7 +131,8 @@ const BuyPackage = ({ navigation }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        setLoading(false);
+        console.log("Buy Package", error);
       });
   };
 

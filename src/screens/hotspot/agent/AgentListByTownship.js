@@ -46,7 +46,7 @@ const AgentListByTownship = ({ navigation }) => {
     fetchData();
 
     const backAction = () => {
-      navigation.navigate("AgentTownship");
+      navigation.goBack(null);
       return true; // Prevent default behavior (exit the app)
     };
 
@@ -98,9 +98,7 @@ const AgentListByTownship = ({ navigation }) => {
     return (
       <TouchableOpacity
         style={[styles.card_container, Styles.box_shadow]}
-        onPress={() =>
-          navigation.navigate("AgentDetail", { tsh_name: tsh_name, data: item })
-        }
+        onPress={() => navigation.goBack(null)}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={Styles.box_shadow}>
@@ -168,7 +166,7 @@ const AgentListByTownship = ({ navigation }) => {
       <TopupHeader
         backgroundColor="#337ab7"
         headerText={tsh_name}
-        onPressBack={() => navigation.navigate("AgentTownship")}
+        onPressBack={() => navigation.goBack(null)}
         showSetting={false}
       />
       {isLoading ? (

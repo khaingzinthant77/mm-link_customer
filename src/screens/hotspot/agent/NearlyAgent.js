@@ -26,7 +26,7 @@ const NearlyAgent = ({ navigation }) => {
       <TopupHeader
         backgroundColor="#337ab7"
         headerText="Nearest Agent"
-        onPressBack={() => navigation.navigate("AvailableTownship")}
+        onPressBack={() => navigation.goBack(null)}
         showSetting={false}
       />
       <MapView

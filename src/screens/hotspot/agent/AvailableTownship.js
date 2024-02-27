@@ -141,12 +141,7 @@ const AvailableTownship = ({ navigation }) => {
     return (
       <TouchableOpacity
         style={[styles.card_container, Styles.box_shadow]}
-        onPress={() =>
-          navigation.navigate("AgentListByTownship", {
-            tsh_name: item.township,
-            tsh_id: item.id,
-          })
-        }
+        onPress={() => navigation.goBack(null)}
         key={item.id}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>

@@ -70,9 +70,7 @@ const AgentDetail = ({ navigation }) => {
       <TopupHeader
         backgroundColor="#337ab7"
         headerText="Agent Information"
-        onPressBack={() =>
-          navigation.navigate("AgentList", { tsh_name: tsh_name })
-        }
+        onPressBack={() => navigation.goBack(null)}
         showSetting={false}
       />
       <View style={{ paddingHorizontal: 10 }}>

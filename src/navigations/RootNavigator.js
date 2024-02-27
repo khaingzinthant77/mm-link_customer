@@ -69,6 +69,8 @@ import Login from "@screens/fiber/auth/Login";
 import OTP from "@screens/fiber/auth/OTP";
 //fiber dashboard
 import FiberDashboard from "@screens/fiber/FiberDashboard";
+//material list
+import MaterialList from "@screens/fiber/material/MaterialList";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -253,6 +255,15 @@ function RootNavigator() {
       <Stack.Screen
         name="FiberDashboard"
         component={FiberDashboard}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+          animationEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="MaterialList"
+        component={MaterialList}
         options={{
           headerShown: false,
           gestureEnabled: false,

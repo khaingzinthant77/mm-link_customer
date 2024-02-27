@@ -13,20 +13,23 @@ import VersionCheck from "react-native-version-check-expo";
 //import url
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SvgIcon from "@images/SvgIcon";
-import appjson from "@appjson";
+import { useTranslation } from "react-i18next";
 //import url
 import { APPSTORE_URL, PLAYSTORE_URL } from "@env";
 //import component
 import TopupHeader from "@components/TopupHeader";
 import AlertModel from "@components/AlertModel";
+import LanguageModal from "@components/LanguageModal";
+import i18next from "i18next";
 //import styles
 import Fonts from "@styles/Fonts";
 import Colors from "@styles/Colors";
 const HotspotSetting = ({ navigation }) => {
-  const [data, setData] = useState([]);
   const [usr_name, setUserName] = useState(null);
   const [pwd, setPassword] = useState(null);
   const [showConfirm, setConfirm] = useState(false);
+  const [show_lang_modal, setShowLangModal] = useState(false);
+  const { t } = useTranslation();
   useEffect(() => {
     getAsyncData();
   }, []);
@@ -79,6 +82,19 @@ const HotspotSetting = ({ navigation }) => {
     }
   };
 
+  const changeLanguage = async (langCode) => {
+    setShowLangModal(false);
+    await AsyncStorage.setItem("language", langCode); // Set language preference
+    i18next.changeLanguage(langCode);
+  };
+
+  const closeMadal = () => {
+    setShowLangModal(false);
+  };
+  const showModal = () => {
+    setShowLangModal(true);
+  };
+
   return (
     <View style={styles.container}>
       <TopupHeader
@@ -97,7 +113,7 @@ const HotspotSetting = ({ navigation }) => {
         </View>
 
         <Text allowFontScaling={false} style={styles.bodyText}>
-          Profile
+          {t("profile")}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -110,7 +126,7 @@ const HotspotSetting = ({ navigation }) => {
         </View>
 
         <Text allowFontScaling={false} style={styles.bodyText}>
-          About Us
+          {t("about_us")}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -123,19 +139,16 @@ const HotspotSetting = ({ navigation }) => {
         </View>
 
         <Text allowFontScaling={false} style={styles.bodyText}>
-          Contact Us
+          {t("contact")}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => this.handleGetLocale(this.state.locale)}
-        style={styles.btn}
-      >
+      <TouchableOpacity onPress={() => showModal()} style={styles.btn}>
         <View style={styles.imgContainer}>
           <SvgIcon icon="language" width={20} height={20} />
         </View>
 
         <Text allowFontScaling={false} style={styles.bodyText}>
-          Choose Language
+          {t("choose_language")}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -153,7 +166,7 @@ const HotspotSetting = ({ navigation }) => {
         </View>
 
         <Text allowFontScaling={false} style={styles.bodyText}>
-          Change Password
+          {t("change_password")}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -166,7 +179,7 @@ const HotspotSetting = ({ navigation }) => {
         </View>
 
         <Text allowFontScaling={false} style={styles.bodyText}>
-          Version
+          {t("version")}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -179,7 +192,7 @@ const HotspotSetting = ({ navigation }) => {
         </View>
 
         <Text allowFontScaling={false} style={styles.bodyText}>
-          Logout
+          {t("logout")}
         </Text>
       </TouchableOpacity>
       <AlertModel
@@ -189,6 +202,12 @@ const HotspotSetting = ({ navigation }) => {
         is_show_two={true}
         onClose={() => setConfirm(false)}
         onPressYes={() => redirctLogout()}
+      />
+      <LanguageModal
+        isOpen={show_lang_modal}
+        onClose={() => closeMadal()}
+        changeLangMM={() => changeLanguage("mm")}
+        changeLangEN={() => changeLanguage("en")}
       />
     </View>
   );

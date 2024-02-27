@@ -115,9 +115,7 @@ const OTP = ({ navigation }) => {
         <View style={styles.innerContainer}>
           <View style={styles.header_container}>
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Dashboard", { type: "fiber" })
-              }
+              onPress={() => navigation.navigate("FiberDashboard")}
               style={styles.header_logo}
             >
               <Image

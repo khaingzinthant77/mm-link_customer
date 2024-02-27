@@ -29,7 +29,7 @@ import QRModal from "@components/QRModal";
 //import api
 import { newsApi, loginApi } from "@apis/TopupApis";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useTranslation } from "react-i18next";
 const HotspotDashboard = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ const HotspotDashboard = ({ navigation }) => {
   const [expiredate, setExpireDate] = useState(null);
   const [remain_point, setRemainPoint] = useState(null);
   const [is_show_hide, setShowHide] = useState(null);
-
+  const { t } = useTranslation();
   useEffect(() => {
     getSliderImg();
     getSetting();
@@ -246,7 +246,7 @@ const HotspotDashboard = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
               <Text allowFontScaling={false} style={styles.expText}>
-                Expire Date: {moment(expiredate).format("DD/MM/YYYY")}
+                {t("expire_date")}: {moment(expiredate).format("DD/MM/YYYY")}
               </Text>
             </View>
           </View>
@@ -313,7 +313,7 @@ const HotspotDashboard = ({ navigation }) => {
             }
           >
             <Text allowFontScaling={false} style={styles.progressText}>
-              Data
+              {t("data")}
             </Text>
             <AnimatedCircularProgress
               size={100}
@@ -354,7 +354,7 @@ const HotspotDashboard = ({ navigation }) => {
             }
           >
             <Text allowFontScaling={false} style={styles.progressText}>
-              Point
+              {t("point")}
             </Text>
             <AnimatedCircularProgress
               size={100}
@@ -403,7 +403,7 @@ const HotspotDashboard = ({ navigation }) => {
               />
 
               <Text allowFontScaling={false} style={styles.cardText}>
-                Nearly Agent
+                {t("near_agent")}
               </Text>
             </View>
           </TouchableOpacity>
@@ -424,7 +424,7 @@ const HotspotDashboard = ({ navigation }) => {
               />
 
               <Text allowFontScaling={false} style={styles.cardText}>
-                Buy Package
+                {t("buy_package")}
               </Text>
             </View>
           </TouchableOpacity>
@@ -445,7 +445,7 @@ const HotspotDashboard = ({ navigation }) => {
               style={{ width: 45, height: 40 }}
             />
             <Text allowFontScaling={false} style={styles.cardText}>
-              Usage History
+              {t("usage_history")}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -463,7 +463,7 @@ const HotspotDashboard = ({ navigation }) => {
               style={{ width: 45, height: 40 }}
             />
             <Text allowFontScaling={false} style={styles.cardText}>
-              Topup History
+              {t("topup_history")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -478,7 +478,7 @@ const HotspotDashboard = ({ navigation }) => {
               style={{ width: 40, height: 40 }}
             />
             <Text allowFontScaling={false} style={styles.cardText}>
-              News
+              {t("news")}
             </Text>
           </TouchableOpacity>
 
@@ -492,7 +492,7 @@ const HotspotDashboard = ({ navigation }) => {
               style={{ width: 40, height: 40 }}
             />
             <Text allowFontScaling={false} style={styles.cardText}>
-              Point Transaction
+              {t("point_transaction")}
             </Text>
           </TouchableOpacity>
         </View>

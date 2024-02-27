@@ -298,6 +298,10 @@ const FiberDashboard = ({ navigation }) => {
     setOpenExpireModal(false);
   };
 
+  navigate = (route_name, param) => {
+    navigation.navigate(route_name, { data: param });
+  };
+
   return isLoading ? (
     <View style={styles.container}>
       <StatusBar hidden />
@@ -310,7 +314,7 @@ const FiberDashboard = ({ navigation }) => {
       <StatusBar hidden />
       <SafeAreaView style={{ backgroundColor: Colors.theme_color }} />
       <View style={styles.header_container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
           <Image
             source={require("@icons/header/previous.png")}
             style={styles.backImg}
@@ -468,6 +472,7 @@ const FiberDashboard = ({ navigation }) => {
                 icon_height={50}
                 header={t("materials")}
                 label={materialList.length}
+                onPressBtn={this.navigate("MaterialList", materialList)}
               />
               <CardView
                 icon_name="internetPlan"
