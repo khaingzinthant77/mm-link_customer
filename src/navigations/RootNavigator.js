@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 //import component
 import TopupHeader from "@components/TopupHeader";
+import FiberHeader from "@components/FiberHeader";
 //import color
 import Colors from "@styles/Colors";
 
@@ -77,12 +78,33 @@ import PlanUpDown from "@screens/fiber/internetPlan/PlanUpDown";
 import BankAccountList from "@screens/fiber/bankAccount/BankAccountList";
 //noti list
 import NotiList from "@screens/fiber/noti/NotiList";
+import NotiDetail from "@screens/fiber/noti/NotiDetail";
 //live chat
 import LiveChat from "@screens/chat/LiveChat";
 //aggrement
 import AggrementScreen from "@screens/fiber/aggrement/AggrementScreen";
 //speed test
 import SpeedTestScreen from "@screens/fiber/speedTest/SpeedTestScreen";
+//import payment
+import PaymentNavigator from "./PaymentNavigator";
+//paid detail
+import PaidDetail from "@screens/fiber/payment/paid/PaidDetail";
+//unpaid detail
+import UnPaidDetail from "@screens/fiber/payment/unPaid/UnPaidDetail";
+//payslip
+import PaySlip from "@screens/fiber/payment/paid/PaySlip";
+//ticket navigator
+import TicketNavigator from "./TicketNavigator";
+//solve list
+import SolvedList from "@screens/fiber/ticket/solved/SolvedList";
+//unsolve list
+import UnSolvedList from "@screens/fiber/ticket/unSolved/UnSolvedList";
+//solve detail
+import SolvedDetail from "@screens/fiber/ticket/solved/SolvedDetail";
+//unsolve detail
+import UnSolvedDetail from "@screens/fiber/ticket/unSolved/UnSolvedDetail";
+//create ticket
+import CreateTicket from "@screens/fiber/ticket/CreateTicket";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -300,6 +322,13 @@ function RootNavigator() {
         }}
       />
       <Stack.Screen
+        name="NotiDetail"
+        component={NotiDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="LiveChat"
         component={LiveChat}
         options={{
@@ -316,6 +345,92 @@ function RootNavigator() {
       <Stack.Screen
         name="SpeedTestScreen"
         component={SpeedTestScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="PaymentNavigator"
+        component={PaymentNavigator}
+        options={{
+          header: ({ navigation }) => (
+            <FiberHeader
+              backgroundColor="#337ab7"
+              headerText="Payment History"
+              routeName="Dashboard"
+              navigation={navigation}
+              onPress={() => this.props.navigation.goBack(null)}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="PaidDetail"
+        component={PaidDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="UnPaidDetail"
+        component={UnPaidDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="PaySlip"
+        component={PaySlip}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="TicketNavigator"
+        component={TicketNavigator}
+        options={{
+          header: ({ navigation }) => (
+            <FiberHeader
+              backgroundColor="#337ab7"
+              headerText="Ticket"
+              routeName="Dashboard"
+              navigation={navigation}
+              onPress={() => this.props.navigation.goBack(null)}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="SolvedList"
+        component={SolvedList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="UnSolvedList"
+        component={UnSolvedList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SolvedDetail"
+        component={SolvedDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="UnSolvedDetail"
+        component={UnSolvedDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="CreateTicket"
+        component={CreateTicket}
         options={{
           headerShown: false,
         }}

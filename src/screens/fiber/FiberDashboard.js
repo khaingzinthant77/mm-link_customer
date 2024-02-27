@@ -503,7 +503,16 @@ const FiberDashboard = ({ navigation }) => {
                 icon_width={50}
                 icon_height={50}
                 header={t("payment_history")}
-                label={materialList.length}
+                label={total ? commaString(total) : commaString(paymentotal)}
+                onPressBtn={() =>
+                  navigation.navigate("PaymentNavigator", {
+                    data: paymentList,
+                    total: paymentotal
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                    backRoute: "Dashboard",
+                  })
+                }
               />
               <CardView
                 icon_name="expire_date"
@@ -530,6 +539,12 @@ const FiberDashboard = ({ navigation }) => {
                 type="ticket"
                 issue_count={issue_count}
                 solved_count={solved_count}
+                onPressBtn={() =>
+                  navigation.navigate("TicketNavigator", {
+                    data: ticketArr,
+                    site_code: sitecode ? sitecode : data.sites[0].siteCode,
+                  })
+                }
               />
               <CardView
                 icon_name="onlinePayment"
