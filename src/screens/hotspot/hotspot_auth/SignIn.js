@@ -143,6 +143,7 @@ const SignIn = ({ navigation }) => {
     }
     token = (
       await Notifications.getExpoPushTokenAsync({
+        // projectId: Constants.expoConfig.extra.eas.projectId,
         projectId: Constants.expoConfig.extra.eas.projectId,
       })
     ).data;

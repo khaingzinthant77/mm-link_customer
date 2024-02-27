@@ -81,6 +81,14 @@ const HomeScreen = ({ navigation }) => {
     }
     Linking.openURL(phoneNumber);
   };
+  _handleCheckLogin = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    if (access_token != null) {
+      navigation.navigate("FiberDashboard");
+    } else {
+      navigation.navigate("Login");
+    }
+  };
   return (
     <View style={styles.container}>
       <SafeAreaView backgroundColor={Colors.theme_color} />
@@ -123,7 +131,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ alignItems: "center" }}
-          onPress={() => handleCheckLogin()}
+          onPress={() => _handleCheckLogin()}
         >
           <Image
             source={require("@icons/home/wifi.png")}

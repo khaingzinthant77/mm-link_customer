@@ -9,10 +9,12 @@ import RootNavigator from "@navigators/RootNavigator";
 import Colors from "@styles/Colors";
 //import font
 import * as Font from "expo-font";
+import { initializeLocalization } from "./src/services/i18n";
 const App = () => {
   const [font_loaded, setFontLoaded] = useState(false);
   useEffect(() => {
     loadCustomFonts();
+    initializeLocalization();
   }, []);
 
   const loadCustomFonts = async () => {
@@ -31,7 +33,6 @@ const App = () => {
   };
   return (
     <NavigationContainer>
-      
       {font_loaded ? (
         <RootNavigator />
       ) : (
@@ -41,7 +42,7 @@ const App = () => {
           <ActivityIndicator size={"large"} color={Colors.theme_color} />
         </View>
       )}
-      <StatusBar backgroundColor={Colors.theme_color}/>
+      <StatusBar backgroundColor={Colors.theme_color} />
     </NavigationContainer>
   );
 };

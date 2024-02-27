@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-
+import Fonts from "@styles/Fonts";
 const Styles = StyleSheet.create({
   box_shadow: {
     borderRadius: 5,
@@ -11,6 +11,21 @@ const Styles = StyleSheet.create({
     marginTop: 5,
     marginHorizontal: 5,
     marginBottom: 5,
+  },
+  dropdown: {
+    height: 30,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 8,
+    color: "white",
+    borderColor: "white",
+    width: "50%",
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    color: "white",
+    fontFamily: Fonts.primary,
   },
 });
 export default Styles;

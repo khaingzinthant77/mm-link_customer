@@ -1,79 +1,114 @@
-//check local
-export const isLocalApi = "/api/local";
-//check api
-export const checkApi = "/api/check";
+import { PORTAL_API_END_POINT } from "@env";
 
 // login api
-export const loginApi = "/api/login";
+export const loginApi = PORTAL_API_END_POINT + "appuser/login";
 
-//news
-export const newsApi = "/api/slider_list";
+// get service plans api
+export const getServicePlanApi = PORTAL_API_END_POINT + "ServicePlan/show/";
 
-//register url
-export const register = "https://hs-aaa.mm-link.net/reg.php";
+//payment slip
+export const bankSlipTransferApi =
+  PORTAL_API_END_POINT + "serviceinvoice/invoiceNo";
 
-//foreget password
-export const forgetPsw = "https://hs-aaa.mm-link.net/passwd.php";
+//get townships api
+export const getTownshipApi = PORTAL_API_END_POINT + "township/";
 
-//usageHistory
-export const usageHistoryURL =
-  "https://hs-aaa.mm-link.net/user.php?cont=traffic_report";
+//get quarter api
+export const quarterApi = PORTAL_API_END_POINT + "quarter/bytownship";
 
-//get buy packages
-export const getPackageApi = "/api/data";
+//get near zone
+export const getNearZoneApi = PORTAL_API_END_POINT + "Zone/Nearest";
 
-//payment show / hide api
-export const paymentApi = "/api/getConfig";
+//customer information api
+export const customerInfoApi = PORTAL_API_END_POINT + "customer/information/";
 
-//topup history store
-export const topupStoreApi = "/api/topup_create_history";
+//solvedTicketDetail api
+export const solvedTicketDetail = PORTAL_API_END_POINT + "ticket/";
 
-//topup data history
-export const topupDataHistoryApi = "/api/topupDataHistory";
+//get inquiry api
+export const getInquiryApi = PORTAL_API_END_POINT + "Form1/Inquiry";
 
-//gitt
-export const giftApi = "/api/gift";
+//get online payment api
+export const online_payment = PORTAL_API_END_POINT + "bank/";
 
-//topup profile update
-export const profileUpdateApi = "/api/profileUpdate";
+//get ticketproblem api
+export const ticketproblem = PORTAL_API_END_POINT + "ticketproblem/";
 
-//point redeem api
-export const redeemApi = "/api/redeemPoint";
+//get ticketissuetype api
+export const ticketissuetype = PORTAL_API_END_POINT + "ticketissuetype/";
 
-//store customer token api
-export const store_token_api = "/api/store_cust_token";
+//get ticket api
+export const ticketApi = PORTAL_API_END_POINT + "ticket";
 
-//verify phone register
-export const verify_api = "/api/verify";
+//get purchased api
+export const purchaseApi =
+  PORTAL_API_END_POINT + "ServiceInvoice/History/Customer/";
 
-//register api
-export const register_api = "/api/register";
+//get purchased detail api
+export const purchasedetailApi = PORTAL_API_END_POINT + "serviceinvoice/";
 
-//send code forget password api
-export const resetVerifyCodeApi = "/api/resetVerifyCode";
+//get all to purchase api
+export const topurchaseApi =
+  PORTAL_API_END_POINT + "ServiceInvoice/Credit/Customer/";
 
-//verifyResetCode
-export const verifyResetCodeApi = "/api/verifyResetCode";
+//get purchased list api
+export const purchasedListApi =
+  PORTAL_API_END_POINT + "ServiceInvoice/PaidSiteServiceBill";
 
-//reset Password api
-export const resetPasswordApi = "/api/resetPassword";
+//get to purchase api
+export const toPurchaseApi =
+  PORTAL_API_END_POINT + "ServiceInvoice/CreditSiteServiceBill";
 
-//data transfer api
-export const dataTransferApi = "/api/data_transfer";
+//get unsolved ticket api
+export const unsolvedApi = PORTAL_API_END_POINT + "ticket/ticketStatus";
 
-//transfer history api
-export const transferHistoryApi = "/api/dataTransferHistory";
+//get unsolved ticket detail
+export const unsolvedTicketDetailApi = PORTAL_API_END_POINT + "ticket/";
 
-export const checkAccApi = "/api/check_hotspot_user";
+//plan upgrade
+export const internetplanUpgradeApi =
+  PORTAL_API_END_POINT + "TicketIssueType/ByIssueType/G/";
 
-//get hotspot availible township
-export const availableTshApi = "/api/townships";
+//change password
+export const changePasswordApi = PORTAL_API_END_POINT + "customer/";
 
-//get agent lsit by township
-export const tshAgentApi = "/api/agents_list";
+//change new password
+export const changeNewPasswordApi =
+  PORTAL_API_END_POINT + "customer/changepassword";
 
-//get nearest agent
-export const nearestAgentApi = "/api/get_all_agents";
+//logout api
+export const logoutApi = PORTAL_API_END_POINT + "appuser/logout";
 
-//buy package with payment
-export const hotspotPaymentApi = "/api/hotspotMakePayment";
+//paid invoice
+export const paidInvoiceUrl = PORTAL_API_END_POINT + "serviceinvoice/";
+
+//paid invoice
+export const paidUpdateApi =
+  PORTAL_API_END_POINT + "ServiceInvoice/UpdateTransaction/";
+
+//event api
+export const eventApi = "https://news.mm-link.net/api/popup_ad";
+
+//rating api
+export const ratingApi = "https://news.mm-link.net/api/rating";
+
+//billing contact api
+export const paymentContactApi = "https://news.mm-link.net/api/billing_contact";
+
+//login api
+export const otpLoginApi = PORTAL_API_END_POINT + "appuser/loginrequest";
+
+//hotspot bonus history
+export const bonus_history = "/api/get_bonus_information";
+
+//update phone number
+export const updatePhoneApi = "/api/update_gift_accounts";
+
+//claim bonus list
+export const claimBonusList = "/api/claim_bonus_list";
+
+//claim bonus
+export const claimBonusApi = "/api/claim_bonus";
+
+//bonus history detail
+export const historyDetailApi = "/api/claim_bonus_detail";

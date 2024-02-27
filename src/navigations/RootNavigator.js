@@ -7,7 +7,7 @@ import Colors from "@styles/Colors";
 const Stack = createStackNavigator();
 //import screen
 import HomeScreen from "@screens/home/HomeScreen";
-//hotspot
+// ----------- Hotspot Module Start ---------------------
 //hotspot authentication
 import SignIn from "@screens/hotspot/hotspot_auth/SignIn";
 //hotspot forget
@@ -61,6 +61,14 @@ import Profile from "@screens/hotspot/setting/Profile";
 import HotspotContact from "@screens/hotspot/setting/HotspotContact";
 //change password
 import ChangePassword from "@screens/hotspot/setting/ChangePassword";
+// ----------- Hotspot Module End ---------------------
+
+// ----------- Fiber Module Start ---------------------
+import Login from "@screens/fiber/auth/Login";
+//otp
+import OTP from "@screens/fiber/auth/OTP";
+//fiber dashboard
+import FiberDashboard from "@screens/fiber/FiberDashboard";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -229,6 +237,27 @@ function RootNavigator() {
         name="ChangePassword"
         component={ChangePassword}
         options={{ headerShown: false }}
+      />
+      {/* hotspot module end */}
+      {/* fiber module start */}
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="OTP"
+        component={OTP}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FiberDashboard"
+        component={FiberDashboard}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+          animationEnabled: false,
+        }}
       />
     </Stack.Navigator>
   );
