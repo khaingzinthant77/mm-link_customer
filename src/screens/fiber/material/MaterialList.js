@@ -2,6 +2,9 @@ import React from "react";
 import { View, StyleSheet, ScrollView, BackHandler, Text } from "react-native";
 //import component
 import Fonts from "@styles/Fonts";
+import FiberHeader from "@components/FiberHeader";
+import Colors from "@styles/Colors";
+import Styles from "@styles/Styles";
 //import Localization
 import { withTranslation } from "react-i18next";
 import { initializeLocalization } from "@services/i18n";
@@ -39,14 +42,11 @@ class MaterialList extends React.Component {
     const { t } = this.props;
     return (
       <View style={styles.container}>
-        {/* <Header
-          backgroundColor="#337ab7"
-          headerText="materials"
-          routeName="Dashboard"
-          onPress={() =>
-            this.props.navigation.navigate("Dashboard", { type: "fiber" })
-          }
-        /> */}
+        <FiberHeader
+          backgroundColor={Colors.theme_color}
+          headerText={t("materials")}
+          onPress={() => this.props.navigation.goBack(null)}
+        />
 
         <View
           style={{
@@ -84,7 +84,42 @@ class MaterialList extends React.Component {
             {this.props.route.params.data.length > 0 ? (
               this.props.route.params.data.map((data, index) => {
                 return (
-                  <View key={index}>
+                  <View
+                    key={index}
+                    style={[styles.card_container, Styles.box_shadow]}
+                  >
+                    <View style={styles.secondContainer}>
+                      <View>
+                        <Text
+                          allowFontScaling={false}
+                          style={{
+                            fontSize: 15,
+                            color: "#245580",
+                            fontFamily: Fonts.primary,
+                            paddingTop: 10,
+                          }}
+                        >
+                          {data.name}
+                        </Text>
+                        <Text
+                          allowFontScaling={false}
+                          style={{
+                            fontSize: 12,
+                            color: "#000000",
+                            fontFamily: Fonts.primary,
+                          }}
+                        >
+                          {data.serial}
+                        </Text>
+                      </View>
+
+                      <Text
+                        allowFontScaling={false}
+                        style={{ fontSize: 15, fontFamily: Fonts.primary }}
+                      >
+                        {data.qty} {data.unit}
+                      </Text>
+                    </View>
                     {/* <ListCard
                       number={index + 1}
                       name={data.name}
@@ -196,5 +231,18 @@ const styles = StyleSheet.create({
   backImg: {
     width: 24,
     height: 17,
+  },
+  card_container: {
+    paddingHorizontal: 10,
+    marginTop: 1,
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 5,
+  },
+  secondContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 3,
   },
 });

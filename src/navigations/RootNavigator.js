@@ -71,6 +71,18 @@ import OTP from "@screens/fiber/auth/OTP";
 import FiberDashboard from "@screens/fiber/FiberDashboard";
 //material list
 import MaterialList from "@screens/fiber/material/MaterialList";
+//plan up down
+import PlanUpDown from "@screens/fiber/internetPlan/PlanUpDown";
+//online payment
+import BankAccountList from "@screens/fiber/bankAccount/BankAccountList";
+//noti list
+import NotiList from "@screens/fiber/noti/NotiList";
+//live chat
+import LiveChat from "@screens/chat/LiveChat";
+//aggrement
+import AggrementScreen from "@screens/fiber/aggrement/AggrementScreen";
+//speed test
+import SpeedTestScreen from "@screens/fiber/speedTest/SpeedTestScreen";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -257,8 +269,6 @@ function RootNavigator() {
         component={FiberDashboard}
         options={{
           headerShown: false,
-          gestureEnabled: false,
-          animationEnabled: false,
         }}
       />
       <Stack.Screen
@@ -266,8 +276,48 @@ function RootNavigator() {
         component={MaterialList}
         options={{
           headerShown: false,
-          gestureEnabled: false,
-          animationEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="PlanUpDown"
+        component={PlanUpDown}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="BankAccountList"
+        component={BankAccountList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="NotiList"
+        component={NotiList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="LiveChat"
+        component={LiveChat}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AggrementScreen"
+        component={AggrementScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SpeedTestScreen"
+        component={SpeedTestScreen}
+        options={{
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

@@ -14,17 +14,13 @@ const Styles = StyleSheet.create({
   },
   dropdown: {
     height: 30,
-    borderColor: "gray",
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 8,
-    color: "white",
-    borderColor: "white",
     width: "50%",
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: "white",
     fontFamily: Fonts.primary,
   },
 });

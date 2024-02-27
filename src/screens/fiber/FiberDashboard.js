@@ -356,8 +356,8 @@ const FiberDashboard = ({ navigation }) => {
           }}
         >
           <Dropdown
-            style={[Styles.dropdown]}
-            selectedTextStyle={Styles.selectedTextStyle}
+            style={[Styles.dropdown, { borderColor: "white" }]}
+            selectedTextStyle={[Styles.selectedTextStyle, { color: "white" }]}
             search={false}
             data={townships}
             maxHeight={200}
@@ -472,7 +472,7 @@ const FiberDashboard = ({ navigation }) => {
                 icon_height={50}
                 header={t("materials")}
                 label={materialList.length}
-                onPressBtn={this.navigate("MaterialList", materialList)}
+                onPressBtn={() => this.navigate("MaterialList", materialList)}
               />
               <CardView
                 icon_name="internetPlan"
@@ -480,6 +480,15 @@ const FiberDashboard = ({ navigation }) => {
                 icon_height={50}
                 header={t("internet_plan")}
                 label={internetplan}
+                type="internet_plan"
+                onPressBtn={() =>
+                  navigation.navigate("PlanUpDown", {
+                    currentPlan: currentPlan,
+                    planId: planId,
+                    siteId: siteId,
+                    data: data,
+                  })
+                }
               />
             </View>
             <View
@@ -501,7 +510,9 @@ const FiberDashboard = ({ navigation }) => {
                 icon_width={40}
                 icon_height={40}
                 header={t("expire_date")}
-                label={internetplan}
+                label={
+                  expiredate ? Moment(expiredate).format("DD-MM-YYYY") : "-"
+                }
               />
             </View>
             <View
@@ -526,6 +537,7 @@ const FiberDashboard = ({ navigation }) => {
                 icon_height={50}
                 header={t("online_payment")}
                 type="bank"
+                onPressBtn={() => navigation.navigate("BankAccountList")}
               />
             </View>
             <View
@@ -540,12 +552,21 @@ const FiberDashboard = ({ navigation }) => {
                 icon_width={30}
                 icon_height={30}
                 header={t("notification")}
+                onPressBtn={() => navigation.navigate("NotiList")}
               />
               <CardView
                 icon_name="chat"
                 icon_width={30}
                 icon_height={30}
                 header={t("chat")}
+                onPressBtn={() =>
+                  navigation.navigate("LiveChat", {
+                    cname: cName,
+                    siteCode: sitecode ? sitecode : data.sites[0].siteCode,
+                    cPh: cPh,
+                    backRoute: "Dashboard",
+                  })
+                }
               />
             </View>
             <View
@@ -560,12 +581,14 @@ const FiberDashboard = ({ navigation }) => {
                 icon_width={30}
                 icon_height={30}
                 header={t("aggrement")}
+                onPressBtn={() => navigation.navigate("AggrementScreen")}
               />
               <CardView
                 icon_name="speed"
                 icon_width={30}
                 icon_height={30}
                 header={t("speed_test")}
+                onPressBtn={() => navigation.navigate("SpeedTestScreen")}
               />
             </View>
             <View

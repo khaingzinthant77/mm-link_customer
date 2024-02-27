@@ -14,9 +14,14 @@ const CardView = ({
   type,
   issue_count,
   solved_count,
+  onPressBtn,
 }) => {
   return (
-    <TouchableOpacity style={styles.card_container} activeOpacity={0.8}>
+    <TouchableOpacity
+      style={styles.card_container}
+      activeOpacity={0.8}
+      onPress={() => onPressBtn()}
+    >
       {label ? (
         <SvgIcon icon={icon_name} width={icon_width} height={icon_height} />
       ) : (
@@ -28,7 +33,13 @@ const CardView = ({
       {label ? (
         <View style={{ alignItems: "flex-end" }}>
           <Text style={{ fontFamily: Fonts.primary }}>{header}</Text>
-          <Text style={{ fontFamily: Fonts.primary, marginTop: 5 }}>
+          <Text
+            style={{
+              fontFamily: Fonts.primary,
+              marginTop: 5,
+              color: type == "internet_plan" ? "orange" : null,
+            }}
+          >
             {label}
           </Text>
         </View>

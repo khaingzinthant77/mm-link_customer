@@ -50,7 +50,8 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-vector-icons": "^10.0.1",
     "react-native-version-check-expo": "^3.4.7",
-    "react-native-webview": "^13.6.3"
+    "react-native-webview": "^13.6.3",
+    "expo-clipboard": "~4.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
