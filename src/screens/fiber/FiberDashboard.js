@@ -348,7 +348,13 @@ const FiberDashboard = ({ navigation }) => {
         >
           Fiber Internet
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("FiberSetting", {
+              data: data,
+            })
+          }
+        >
           <Image
             source={require("@icons/header/setting.png")}
             style={styles.setting_icon}
