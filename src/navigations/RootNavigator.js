@@ -107,6 +107,12 @@ import UnSolvedDetail from "@screens/fiber/ticket/unSolved/UnSolvedDetail";
 import CreateTicket from "@screens/fiber/ticket/CreateTicket";
 //setting
 import FiberSetting from "@screens/fiber/setting/FiberSetting";
+//fiberprofile
+import FiberProfile from "@screens/fiber/setting/Profile";
+//fiber contact
+import Contact from "@screens/fiber/setting/Contact";
+//rating
+import Rating from "@screens/fiber/setting/Rating";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -440,6 +446,27 @@ function RootNavigator() {
       <Stack.Screen
         name="FiberSetting"
         component={FiberSetting}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="FiberProfile"
+        component={FiberProfile}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Contact"
+        component={Contact}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Rating"
+        component={Rating}
         options={{
           headerShown: false,
         }}

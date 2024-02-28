@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,118 +7,53 @@ import {
   BackHandler,
   Alert,
   Linking,
+  Image,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Svg, { G, Path } from "react-native-svg";
-import appjson from "@appjson";
+import { useRoute } from "@react-navigation/native";
 import VersionCheck from "react-native-version-check-expo";
-
-import { appstoreUrl, playstoreUrl } from "@apis/FiberApis";
-import { withTranslation } from "react-i18next";
-import { initializeLocalization } from "@services/i18n";
-//import component
-import LanguageModal from "@components/LanguageModal";
-import FiberHeader from "@components/FiberHeader";
-import Fonts from "@styles/Fonts";
-import i18next from "i18next";
+//import url
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import SvgIcon from "@images/SvgIcon";
-class FiberSetting extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      isOpenLangModal: false,
-      confirmLocaleModalOpen: false,
-      changeLocale: "",
-      mylang: "MM",
-      current_locale: "MM",
-      locale: null,
-      isOpenErrorModal: false,
-      mmCheck: false,
-      enCheck: false,
-    };
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-  }
-  componentDidMount = async () => {
-    this.setState({
-      data: this.props.route.params.datas
-        ? this.props.route.params.datas
-        : this.props.route.params.data,
-    });
-    BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.handleBackButtonClick
-    );
-    initializeLocalization();
+import { useTranslation } from "react-i18next";
+//import url
+import { APPSTORE_URL, PLAYSTORE_URL } from "@env";
+//import component
+import FiberHeader from "@components/FiberHeader";
+import AlertModel from "@components/AlertModel";
+import LanguageModal from "@components/LanguageModal";
+import i18next from "i18next";
+//import styles
+import Fonts from "@styles/Fonts";
+import Colors from "@styles/Colors";
+const FiberSetting = ({ navigation }) => {
+  const [usr_name, setUserName] = useState(null);
+  const [pwd, setPassword] = useState(null);
+  const [showConfirm, setConfirm] = useState(false);
+  const [show_lang_modal, setShowLangModal] = useState(false);
+  const { t } = useTranslation();
+  const route = new useRoute();
+  useEffect(() => {
+    getAsyncData();
+  }, []);
+  const getAsyncData = async () => {
+    setUserName(await AsyncStorage.getItem("tusername"));
+    setPassword(await AsyncStorage.getItem("tpassword"));
   };
-  componentWillUnmount() {
-    BackHandler.removeEventListener(
-      "hardwareBackPress",
-      this.handleBackButtonClick
-    );
-  }
-
-  handleBackButtonClick() {
-    this.props.navigation.goBack(null);
-    return true;
-  }
-
-  _handleLogout() {
-    // Works on both Android and iOS
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to Logout?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => this.redirctLogout() },
-      ],
-      { cancelable: false }
-    );
-  }
+  _handleLogout = () => {
+    setConfirm(true);
+  };
 
   redirctLogout = async () => {
-    // AsyncStorage.clear();
+    setConfirm(false);
     try {
-      await AsyncStorage.removeItem("access_token");
-      await AsyncStorage.removeItem("token_type");
-      await AsyncStorage.removeItem("user_id");
-      await AsyncStorage.removeItem("user_name");
-      await AsyncStorage.removeItem("user_level");
-      await AsyncStorage.removeItem("cusId");
-      await AsyncStorage.removeItem("cust_name");
-      await AsyncStorage.removeItem("password");
+      await AsyncStorage.clear();
     } catch (e) {
       // remove error
       console.log(e);
     }
 
-    console.log("Done.");
-    this.props.navigation.navigate("Home");
+    navigation.navigate("HomeScreen");
   };
-  handleGetLocale(locale) {
-    this.setState({
-      isOpenLangModal: true,
-      mylang: locale,
-    });
-  }
-  _handleChangeLangMM = async () => {
-    this.setState({ mmCheck: true, enCheck: false, isOpenLangModal: false });
-
-    await AsyncStorage.setItem("language", "mm"); // Set language preference
-    i18next.changeLanguage("mm");
-  };
-  _handleChangeLangEN = async () => {
-    this.setState({ enCheck: true, mmCheck: false, isOpenLangModal: false });
-    await AsyncStorage.setItem("language", "en"); // Set language preference
-    i18next.changeLanguage("en");
-  };
-  _handleOnCloseLangModal() {
-    this.setState({ isOpenLangModal: false });
-  }
 
   checkUpdateNeeded = async () => {
     if (Platform.OS == "ios") {
@@ -147,128 +82,134 @@ class FiberSetting extends React.Component {
       Linking.openURL(playstoreUrl);
     }
   };
-  render() {
-    const { t } = this.props;
-    return (
-      <View style={styles.container}>
-        <FiberHeader
-          backgroundColor="#337ab7"
-          headerText="setting"
-          onPress={() => this.props.navigation.navigate("FiberDashboard")}
-        />
-        <View>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate("UserProfile", {
-                data: this.state.data,
-                backRoute: "Setting",
-              })
-            }
-            style={styles.btn}
-            activeOpacity={0.8}
-          >
-            <View style={styles.imgContainer}>
-              <SvgIcon icon={"profile"} width={17} height={15} />
-            </View>
 
-            <Text allowFontScaling={false} style={styles.bodyText}>
-              {t("profile", this.state.locale)}
-            </Text>
-          </TouchableOpacity>
+  const changeLanguage = async (langCode) => {
+    setShowLangModal(false);
+    await AsyncStorage.setItem("language", langCode); // Set language preference
+    i18next.changeLanguage(langCode);
+  };
 
-          <TouchableOpacity
-            onPress={() => Linking.openURL("https://mm-link.net/about-us")}
-            style={styles.btn}
-            activeOpacity={0.8}
-          >
-            <View style={styles.imgContainer}>
-              <SvgIcon icon={"about"} width={17} height={15} />
-            </View>
+  const closeMadal = () => {
+    setShowLangModal(false);
+  };
+  const showModal = () => {
+    setShowLangModal(true);
+  };
 
-            <Text allowFontScaling={false} style={styles.bodyText}>
-              {t("about_us", this.state.locale)}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Contact")}
-            style={styles.btn}
-            activeOpacity={0.8}
-          >
-            <View style={styles.imgContainer}>
-              <SvgIcon icon={"contact"} width={17} height={15} />
-            </View>
-
-            <Text allowFontScaling={false} style={styles.bodyText}>
-              {t("contact", this.state.locale)}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => this.handleGetLocale(this.state.locale)}
-            style={styles.btn}
-          >
-            <View style={styles.imgContainer}>
-              <SvgIcon icon={"language"} width={15} height={15} />
-            </View>
-
-            <Text allowFontScaling={false} style={styles.bodyText}>
-              {t("choose_language", this.state.locale)}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Rating")}
-            activeOpacity={0.8}
-            style={styles.btn}
-          >
-            <View style={styles.imgContainer}>
-              <SvgIcon icon={"rating"} width={17} height={15} />
-            </View>
-
-            <Text allowFontScaling={false} style={styles.bodyText}>
-              {t("rating", this.state.locale)}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => this.checkUpdateNeeded()}
-            activeOpacity={0.8}
-            style={styles.btn}
-          >
-            <View style={styles.imgContainer}>
-              <SvgIcon icon={"version"} width={17} height={15} />
-            </View>
-
-            <Text allowFontScaling={false} style={styles.bodyText}>
-              {t("version", this.state.locale)} {appjson.expo.version}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => this._handleLogout()}
-            style={styles.btn}
-            activeOpacity={0.8}
-          >
-            <View style={styles.imgContainer}>
-              <SvgIcon icon={"logout"} width={17} height={15} />
-            </View>
-
-            <Text allowFontScaling={false} style={styles.bodyText}>
-              {t("logout", this.state.locale)}
-            </Text>
-          </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <FiberHeader
+        backgroundColor={Colors.theme_color}
+        headerText={t("setting")}
+        onPressBack={() => navigation.navigate("FiberDashboard")}
+        showSetting={false}
+      />
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("FiberProfile", { data: route.params.data })
+        }
+        style={styles.btn}
+        activeOpacity={0.8}
+      >
+        <View style={styles.imgContainer}>
+          <SvgIcon icon={"profile"} width={18} height={18} />
         </View>
-        <LanguageModal
-          isOpen={this.state.isOpenLangModal}
-          onClose={() => this._handleOnCloseLangModal()}
-          changeLangMM={() => this._handleChangeLangMM()}
-          changeLangEN={() => this._handleChangeLangEN()}
-        />
-      </View>
-    );
-  }
-}
-export default withTranslation()(FiberSetting);
+
+        <Text allowFontScaling={false} style={styles.bodyText}>
+          {t("profile")}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => Linking.openURL("https://mm-link.net/about-us")}
+        style={styles.btn}
+        activeOpacity={0.8}
+      >
+        <View style={styles.imgContainer}>
+          <SvgIcon icon="infocircle" width={20} height={20} />
+        </View>
+
+        <Text allowFontScaling={false} style={styles.bodyText}>
+          {t("about_us")}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("HotspotContact")}
+        style={styles.btn}
+        activeOpacity={0.8}
+      >
+        <View style={styles.imgContainer}>
+          <SvgIcon icon="contact" width={20} height={20} />
+        </View>
+
+        <Text allowFontScaling={false} style={styles.bodyText}>
+          {t("contact")}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => showModal()} style={styles.btn}>
+        <View style={styles.imgContainer}>
+          <SvgIcon icon="language" width={20} height={20} />
+        </View>
+
+        <Text allowFontScaling={false} style={styles.bodyText}>
+          {t("choose_language")}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Rating")}
+        activeOpacity={0.8}
+        style={styles.btn}
+      >
+        <View style={styles.imgContainer}>
+          <SvgIcon icon={"rating"} width={25} height={25} />
+        </View>
+
+        <Text allowFontScaling={false} style={styles.bodyText}>
+          {t("rating")}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => this.checkUpdateNeeded()}
+        activeOpacity={0.8}
+        style={styles.btn}
+      >
+        <View style={styles.imgContainer}>
+          <SvgIcon icon="version" width={20} height={20} />
+        </View>
+
+        <Text allowFontScaling={false} style={styles.bodyText}>
+          {t("version")}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => this._handleLogout()}
+        style={styles.btn}
+        activeOpacity={0.8}
+      >
+        <View style={styles.imgContainer}>
+          <SvgIcon icon="logout" width={20} height={20} />
+        </View>
+
+        <Text allowFontScaling={false} style={styles.bodyText}>
+          {t("logout")}
+        </Text>
+      </TouchableOpacity>
+      <AlertModel
+        isOpen={showConfirm}
+        headerIcon={require("@icons/modal_icon/question.png")}
+        text="Are you sure you want to logout?"
+        is_show_two={true}
+        onClose={() => setConfirm(false)}
+        onPressYes={() => redirctLogout()}
+      />
+      <LanguageModal
+        isOpen={show_lang_modal}
+        onClose={() => closeMadal()}
+        changeLangMM={() => changeLanguage("mm")}
+        changeLangEN={() => changeLanguage("en")}
+      />
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -287,8 +228,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   img: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
   },
   text: {
     marginLeft: 10,
@@ -360,3 +301,4 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 });
+export default FiberSetting;
