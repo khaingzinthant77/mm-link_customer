@@ -89,6 +89,7 @@ const FiberDashboard = ({ navigation }) => {
     const fetchData = async () => {
       await getCustInfo();
       await getAsyncData();
+      getEndPoint();
     };
 
     fetchData();
@@ -106,6 +107,37 @@ const FiberDashboard = ({ navigation }) => {
 
     return () => backHandler.remove();
   }, [navigation]);
+
+  getEndPoint = async () => {
+    axios
+      .get("https://news.mm-link.net/api/setting_url")
+      .then((response) => {
+        if (response.data.data.url !== null) {
+          var myendpoint = response.data.data.url;
+          var is_show_hide = response.data.data.is_show_register;
+
+          AsyncStorage.multiSet(
+            [
+              ["endpoint", myendpoint],
+              ["show_hide", is_show_hide.toString()],
+            ],
+            (err) => {
+              if (err) {
+                alert("Asynstorage Error");
+              }
+            }
+          );
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // const res = await getLang();
+    // setLocale(res);
+  };
 
   getAsyncData = async () => {
     setCustName(await AsyncStorage.getItem("user_name"));
@@ -304,6 +336,109 @@ const FiberDashboard = ({ navigation }) => {
     setSiteCode(item.value);
     setTownship(item.value);
     setIsFocus(false);
+
+    if (item.value) {
+      var searchdata = this.searching(item.value);
+      setTempData(searchdata);
+
+      var paymentarr = tempData[0].payment;
+
+      var paymenarrlen = paymentarr.length;
+      // console.log(paymenarrlen);
+
+      var totalamount = 0;
+      if (paymenarrlen > 0) {
+        paymentarr.map((data, index) => {
+          if (data.paymentDate != null) {
+            totalamount = totalamount + data.amount;
+          }
+        });
+      }
+      // console.log(this.state.tempData[0].tickets.length)
+      var ticketarr = tempData[0].tickets;
+      var ticketcount = ticketarr.length;
+      // alert(this.state.tempData[0].expireDate);
+      var solvedcount = 0;
+      var issuecount = 0;
+      if (ticketcount > 0) {
+        ticketarr.map((data, index) => {
+          // console.log(data)
+          if (data.solved == true) {
+            solvedcount = solvedcount + 1;
+          } else {
+            issuecount = issuecount + 1;
+          }
+        });
+      }
+      // AsyncStorage.removeItem("siteId");
+      // AsyncStorage.removeItem("siteCode");
+      AsyncStorage.multiSet(
+        [
+          ["siteId", tempData[0].siteId],
+          ["siteCode", tempData[0].siteCode],
+        ],
+        (err) => {
+          if (err) {
+            // alert("Asynstorage Error");
+            // ToastAndroid.show("Asynstorage Error!", ToastAndroid.SHORT);
+            console.log("Asynstorage Error!");
+          } else {
+            // console.log("here");
+            navigation.navigate("FiberDashboard");
+          }
+        }
+      );
+      // console.log("Hello",tempData[0].expireDate);
+      if (tempData[0].expireDate == null) {
+        setOpenExpireModal(false);
+      } else {
+        var msDiff =
+          new Date(tempData[0].expireDate).getTime() - new Date().getTime(); //Future date - current date
+        var day_diff = Math.floor(msDiff / (1000 * 60 * 60 * 24));
+        // console.log(day_diff);
+        if (day_diff < 3) {
+          self.setState({ isOpenExpireModal: true, diff: day_diff });
+        } else {
+          setOpenExpireModal(false);
+        }
+      }
+
+      setTownship({ value: item.value, label: item.label });
+      setSiteCode(item.value);
+      setDate(tempData[0].installedDate);
+      setUsedDay(tempData[0].usedDay);
+      setMaterials(tempData[0].materials.length);
+      setInternetPlan(
+        tempData[0].internetPlan ? tempData[0].internetPlan.name : ""
+      );
+      setTotal(totalamount);
+      setExpireDate(tempData[0].expireDate);
+      setIssue(issuecount);
+      setSolved(solvedcount);
+      setMaterialList(tempData[0].materials);
+      setPaymentList(tempData[0].payment);
+      setServiceType(
+        tempData[0].internetPlan
+          ? tempData[0].internetPlan.serviceType.stype
+          : ""
+      );
+      setSiteId(tempData[0].siteId);
+      setActualBandwidth(
+        tempData[0].internetPlan ? tempData[0].internetPlan.actualBandwidth : ""
+      );
+      setTicketArr(ticketarr);
+      setPlanId(
+        tempData[0].internetPlan ? tempData[0].internetPlan.planId : ""
+      );
+      setStatus(tempData[0].status);
+    }
+  };
+
+  searching = (word) => {
+    return data.sites.filter((site) => {
+      const sitecode = site.siteCode != null ? site.siteCode : "";
+      return sitecode.toLowerCase().includes(word.toLowerCase());
+    });
   };
 
   _handleOnCloseModal = () => {
@@ -648,6 +783,7 @@ const FiberDashboard = ({ navigation }) => {
                 icon_width={40}
                 icon_height={40}
                 header={t("bonus_reward_list")}
+                onPressBtn={() => navigation.navigate("RewardList")}
               />
               <CardView
                 icon_name="history"

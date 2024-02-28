@@ -113,6 +113,10 @@ import FiberProfile from "@screens/fiber/setting/Profile";
 import Contact from "@screens/fiber/setting/Contact";
 //rating
 import Rating from "@screens/fiber/setting/Rating";
+//reward list
+import RewardList from "@screens/fiber/bonusReward/RewardList";
+//reward detail
+import RewardDetail from "@screens/fiber/bonusReward/RewardDetail";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -467,6 +471,20 @@ function RootNavigator() {
       <Stack.Screen
         name="Rating"
         component={Rating}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="RewardList"
+        component={RewardList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="RewardDetail"
+        component={RewardDetail}
         options={{
           headerShown: false,
         }}
