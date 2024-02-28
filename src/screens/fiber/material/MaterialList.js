@@ -34,7 +34,7 @@ class MaterialList extends React.Component {
   }
 
   handleBackButtonClick() {
-    this.props.navigation.navigate("Dashboard", { type: "fiber" });
+    this.props.navigation.navigate("FiberDashboard");
     return true;
   }
 

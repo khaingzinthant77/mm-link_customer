@@ -72,7 +72,20 @@ const PlanUpDown = ({ navigation }) => {
     getServiceType();
     _getAllIssueType();
     _getAllIssueProblem();
-  }, []);
+
+    const backAction = () => {
+      // Navigate to the desired route here
+      navigation.navigate("FiberDashboard");
+      return true; // Prevent default behavior (exit app)
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   getServiceType = async () => {
     const url = getServicePlanApi + GetRandomValue();

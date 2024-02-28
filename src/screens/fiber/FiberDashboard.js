@@ -92,7 +92,20 @@ const FiberDashboard = ({ navigation }) => {
     };
 
     fetchData();
-  }, []);
+
+    const backAction = () => {
+      // Navigate to the desired route here
+      navigation.navigate("HomeScreen");
+      return true; // Prevent default behavior (exit app)
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   getAsyncData = async () => {
     setCustName(await AsyncStorage.getItem("user_name"));
@@ -294,12 +307,17 @@ const FiberDashboard = ({ navigation }) => {
   };
 
   _handleOnCloseModal = () => {
-    // this.props.navigation.navigate("PaymentNavigator", { screen: "UnPaid" });
+    navigation.navigate("PaymentNavigator", { screen: "UnPaid" });
     setOpenExpireModal(false);
   };
 
   navigate = (route_name, param) => {
     navigation.navigate(route_name, { data: param });
+  };
+
+  onRefresh = () => {
+    setRefreshing(true);
+    this.getCustInfo();
   };
 
   return isLoading ? (
@@ -340,6 +358,12 @@ const FiberDashboard = ({ navigation }) => {
       <ScrollView
         style={styles.view_container}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh.bind(this)}
+          />
+        }
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image
