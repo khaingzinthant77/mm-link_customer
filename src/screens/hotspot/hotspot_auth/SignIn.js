@@ -231,7 +231,7 @@ const SignIn = ({ navigation }) => {
           style={styles.mainCon}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            <TouchableOpacity style={{ marginTop: 10 }}>
+            <TouchableOpacity style={{ marginTop: 30 }}>
               <Entypo name="chevron-left" size={30} />
             </TouchableOpacity>
             <View style={styles.loginIcon}>

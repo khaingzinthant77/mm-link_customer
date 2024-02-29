@@ -434,7 +434,7 @@ class UnPaidDetail extends React.Component {
         <View style={styles.container}>
           <FiberHeader
             backgroundColor="#337ab7"
-            headerText={t("payment_detail")}
+            headerText="Payment Detail"
             routeName="Dashboard"
             onPress={() => this.props.navigation.navigate("PaymentNavigator")}
           />
@@ -531,7 +531,7 @@ class UnPaidDetail extends React.Component {
           <View style={{ flex: 1 }}>
             <FiberHeader
               backgroundColor="#337ab7"
-              headerText="payment_detail"
+              headerText="Payment Detail"
               routeName="Dashboard"
               onPress={() => this.props.navigation.navigate("PaymentNavigator")}
             />

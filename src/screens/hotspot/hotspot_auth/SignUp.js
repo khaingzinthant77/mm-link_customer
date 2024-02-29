@@ -111,7 +111,7 @@ const SignUp = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <TouchableOpacity
             onPress={() => this.props.navigation.goBack(null)}
-            style={{ marginTop: 10 }}
+            style={{ marginTop: 20 }}
           >
             <Entypo name="chevron-left" size={30} />
           </TouchableOpacity>

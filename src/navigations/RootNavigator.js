@@ -68,6 +68,10 @@ import ChangePassword from "@screens/hotspot/setting/ChangePassword";
 import Login from "@screens/fiber/auth/Login";
 //otp
 import OTP from "@screens/fiber/auth/OTP";
+//inquiry map
+import CheckNetwork from "@screens/inquiry/CheckNetwork";
+//inquiry create
+import InquiryCreate from "@screens/inquiry/InquiryCreate";
 //fiber dashboard
 import FiberDashboard from "@screens/fiber/FiberDashboard";
 //material list
@@ -119,6 +123,7 @@ import RewardList from "@screens/fiber/bonusReward/RewardList";
 import RewardDetail from "@screens/fiber/bonusReward/RewardDetail";
 //reward history list
 import HistoryList from "@screens/fiber/bonusHistory/HistoryList";
+import ExternalChat from "@screens/home/ExternalChat";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -494,6 +499,27 @@ function RootNavigator() {
       <Stack.Screen
         name="HistoryList"
         component={HistoryList}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="CheckNetwork"
+        component={CheckNetwork}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="InquiryCreate"
+        component={InquiryCreate}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ExternalChat"
+        component={ExternalChat}
         options={{
           headerShown: false,
         }}

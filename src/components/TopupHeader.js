@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     // justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 10,
+    marginTop: 20,
   },
   backImg: {
     width: 20,

@@ -18,12 +18,13 @@ import Colors from "@styles/Colors";
 //import font
 import Fonts from "@styles/Fonts";
 //import Services
-
+import CustomerInfoModal from "@components/CustomerInfoModal";
 const HomeScreen = ({ navigation }) => {
   const [locale, setLocale] = useState(null);
   const [user_name, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [url, setUrl] = useState("");
+  const [isOpenAlertModel, setOpenAlertModal] = useState(false);
 
   useEffect(() => {
     getEndPoint();
@@ -89,6 +90,12 @@ const HomeScreen = ({ navigation }) => {
       navigation.navigate("Login");
     }
   };
+
+  go_chat = (name, phone_no) => {
+    // alert(name);
+    setOpenAlertModal(false);
+    navigation.navigate("ExternalChat", { name, phone: phone_no });
+  };
   return (
     <View style={styles.container}>
       <SafeAreaView backgroundColor={Colors.theme_color} />
@@ -145,7 +152,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.check_container}>
         <TouchableOpacity
           style={styles.check_btn}
-          onPress={() => navigation.navigate("Map")}
+          onPress={() => navigation.navigate("CheckNetwork")}
         >
           <Image
             style={styles.map_icon}
@@ -194,6 +201,30 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
         <Text allowFontScaling={false}>V {appjson.expo.version}</Text>
       </View>
+
+      <View style={styles.chat_style}>
+        <TouchableOpacity
+          style={{
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            backgroundColor: "#2196F3",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={() => setOpenAlertModal(true)}
+        >
+          <Image
+            source={require("@images/chat.png")}
+            style={{ width: 20, height: 20, resizeMode: "contain" }}
+          />
+        </TouchableOpacity>
+      </View>
+      <CustomerInfoModal
+        isOpen={isOpenAlertModel}
+        onClose={() => setOpenAlertModal(false)}
+        onSubmit={(name, phone) => this.go_chat(name, phone)}
+      />
     </View>
   );
 };
@@ -255,6 +286,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 10,
     marginTop: 10,
+  },
+  chat_style: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    width: 70,
+    height: 70,
   },
 });
 export default HomeScreen;
