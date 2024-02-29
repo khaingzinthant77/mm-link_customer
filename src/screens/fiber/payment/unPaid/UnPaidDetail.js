@@ -10,7 +10,9 @@ import {
   Image,
   Linking,
   BackHandler,
+  Platform,
 } from "react-native";
+import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //import compnonent
 import PurchasedDetailCard from "@components/PurchasedDetailCard";
@@ -83,8 +85,8 @@ class UnPaidDetail extends React.Component {
 
   componentDidMount = async () => {
     initializeLocalization();
-    // var expo_token = await this.registerForPushNotificationsAsync();
-    this.setState({ expoPushToken: null });
+    var expo_token = await this.registerForPushNotificationsAsync();
+    this.setState({ expoPushToken: expo_token });
 
     await this.getSiteCode();
     await this.payShowHideStatus();
@@ -160,36 +162,35 @@ class UnPaidDetail extends React.Component {
     this.props.navigation.navigate("PaySuccess");
   };
 
-  // async registerForPushNotificationsAsync() {
-  //   let token;
-  //   const { status: existingStatus } =
-  //     await Notifications.getPermissionsAsync();
-  //   let finalStatus = existingStatus;
-  //   // alert(existingStatus);
-  //   if (existingStatus !== "granted") {
-  //     const { status } = await Notifications.requestPermissionsAsync({
-  //       allowSystemDialog: true,
-  //     });
-  //     finalStatus = status;
-  //   }
-  //   if (finalStatus !== "granted") {
-  //     // alert("Failed to get push token for push notification!");
-  //     return;
-  //   }
-  //   token = (await Notifications.getExpoPushTokenAsync()).data;
-  //   // this.setState({ expoPushToken: token });
+  registerForPushNotificationsAsync = async () => {
+    let token;
 
-  //   if (Platform.OS === "android") {
-  //     Notifications.setNotificationChannelAsync("default", {
-  //       name: "default",
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       vibrationPattern: [0, 250, 250, 250],
-  //       lightColor: "#FF231F7C",
-  //     });
-  //   }
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
 
-  //   return token;
-  // }
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
+      return;
+    }
+    token = await Notifications.getExpoPushTokenAsync({
+      projectId: Constants.expoConfig.extra.eas.projectId,
+    });
+
+    return token.data;
+  };
 
   _handleOpen() {
     if (this.state.response_invDate != this.state.lower_date) {

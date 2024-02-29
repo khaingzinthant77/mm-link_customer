@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   Platform,
 } from "react-native";
+import Constants from "expo-constants";
 //import localization
 import { useTranslation } from "react-i18next";
 //import library
@@ -93,7 +94,7 @@ const FiberDashboard = ({ navigation }) => {
       await getCustInfo();
       await getAsyncData();
       getEndPoint();
-      // await registerForPushNotificationsAsync();
+      await registerForPushNotificationsAsync();
     };
 
     fetchData();
@@ -305,12 +306,12 @@ const FiberDashboard = ({ navigation }) => {
         setStatus(response.data.sites[0].status);
         setInstallLoc(response.data.sites[0]);
         setRefreshing(false);
-        // self._storeToken(
-        //   response.data.phone,
-        //   response.data.name,
-        //   self.state.expo_token,
-        //   info_arr
-        // );
+        _storeToken(
+          response.data.phone,
+          response.data.name,
+          // expo_token,
+          info_arr
+        );
         AsyncStorage.multiSet(
           [
             ["siteId", response.data.sites[0].siteId],
@@ -344,6 +345,36 @@ const FiberDashboard = ({ navigation }) => {
           await AsyncStorage.clear();
           setLoading(false);
           navigation.navigate("HomeScreen");
+        }
+      });
+  };
+
+  _storeToken = async (phone, user_name, info_arr) => {
+    var token = await registerForPushNotificationsAsync();
+    var appuser = {
+      phone: phone,
+      user_name: user_name,
+      token: token,
+      info_arr: info_arr,
+    };
+    // console.log(appuser);
+    // console.log(NEWS_API_END_POINT + "/token_create");
+    axios
+      .post(NEWS_API_END_POINT + "/token_create", appuser, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then(function (response) {
+        console.log("Store Token", response.data);
+      })
+      .catch(function (error) {
+        console.log("Here", error);
+        if (Platform.OS == "ios") {
+          alert("Network Error!");
+        } else {
+          ToastAndroid.show("Network Error!", ToastAndroid.SHORT);
         }
       });
   };
@@ -482,39 +513,38 @@ const FiberDashboard = ({ navigation }) => {
     this.getCustInfo();
   };
 
-  // async function registerForPushNotificationsAsync() {
-  //   let token;
+  async function registerForPushNotificationsAsync() {
+    let token;
 
-  //   if (Platform.OS === "android") {
-  //     await Notifications.setNotificationChannelAsync("default", {
-  //       name: "default",
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       vibrationPattern: [0, 250, 250, 250],
-  //       lightColor: "#FF231F7C",
-  //     });
-  //   }
-  //   const { status: existingStatus } =
-  //     await Notifications.getPermissionsAsync();
-  //   let finalStatus = existingStatus;
-  //   if (existingStatus !== "granted") {
-  //     const { status } = await Notifications.requestPermissionsAsync();
-  //     finalStatus = status;
-  //   }
-  //   if (finalStatus !== "granted") {
-  //     alert("Failed to get push token for push notification!");
-  //     return;
-  //   }
-  //   // Learn more about projectId:
-  //   // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
-  //   token = (
-  //     await Notifications.getExpoPushTokenAsync({
-  //       projectId: "your-project-id",
-  //     })
-  //   ).data;
-  //   console.log(token);
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
+      return;
+    }
+    // Learn more about projectId:
+    // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
+    token = (
+      await Notifications.getExpoPushTokenAsync({
+        projectId: Constants.expoConfig.extra.eas.projectId,
+      })
+    ).data;
 
-  //   return token;
-  // }
+    return token;
+  }
 
   return isLoading ? (
     <View style={styles.container}>
