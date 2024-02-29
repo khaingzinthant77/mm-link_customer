@@ -790,6 +790,7 @@ const FiberDashboard = ({ navigation }) => {
                 icon_width={30}
                 icon_height={30}
                 header={t("hotspot_bonus_his")}
+                onPressBtn={() => navigation.navigate("HistoryList")}
               />
             </View>
           </View>

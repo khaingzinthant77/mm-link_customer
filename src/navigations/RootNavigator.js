@@ -117,6 +117,8 @@ import Rating from "@screens/fiber/setting/Rating";
 import RewardList from "@screens/fiber/bonusReward/RewardList";
 //reward detail
 import RewardDetail from "@screens/fiber/bonusReward/RewardDetail";
+//reward history list
+import HistoryList from "@screens/fiber/bonusHistory/HistoryList";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -485,6 +487,13 @@ function RootNavigator() {
       <Stack.Screen
         name="RewardDetail"
         component={RewardDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="HistoryList"
+        component={HistoryList}
         options={{
           headerShown: false,
         }}
