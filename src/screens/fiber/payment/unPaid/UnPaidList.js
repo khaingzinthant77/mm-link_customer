@@ -62,7 +62,7 @@ class UnPaidList extends React.Component {
   }
 
   handleBackButtonClick() {
-    this.props.navigation.goBack(null);
+    this.props.navigation.navigate("FiberDashboard");
     return true;
   }
 

@@ -13,6 +13,7 @@ import {
   Linking,
   RefreshControl,
   SafeAreaView,
+  Platform,
 } from "react-native";
 //import localization
 import { useTranslation } from "react-i18next";
@@ -79,6 +80,8 @@ const FiberDashboard = ({ navigation }) => {
   const [cName, setcName] = useState("");
   const [cPh, setcPh] = useState("");
   const [status, setStatus] = useState("");
+  const [solvedTickets, setSolvedTicket] = useState([]);
+  const [unSolveTickets, setUnsolvedTickets] = useState([]);
   const [expInterval, setExpInterval] = useState(0);
   const [isOpenExpireModal, setOpenExpireModal] = useState(false);
   const [toPaidCount, setPaidCount] = useState(0);
@@ -90,6 +93,7 @@ const FiberDashboard = ({ navigation }) => {
       await getCustInfo();
       await getAsyncData();
       getEndPoint();
+      // await registerForPushNotificationsAsync();
     };
 
     fetchData();
@@ -207,6 +211,7 @@ const FiberDashboard = ({ navigation }) => {
         }
 
         var paymentarr = response.data.sites[0].payment;
+
         var paymenarrlen = paymentarr.length;
         var totalamount = 0;
         if (paymenarrlen > 0) {
@@ -218,18 +223,27 @@ const FiberDashboard = ({ navigation }) => {
         }
 
         var ticketarr = response.data.sites[0].tickets;
+        // console.log(ticketarr);
         var ticketcount = ticketarr.length;
         var solvedcount = 0;
         var issuecount = 0;
+        var solvedArr = [];
+        var unSolveArr = [];
         if (ticketcount > 0) {
           ticketarr.map((data, index) => {
             if (data.solved == true) {
               solvedcount = solvedcount + 1;
+              solvedArr.push(data);
             } else {
               issuecount = issuecount + 1;
+              unSolveArr.push(data);
             }
           });
         }
+        // console.log(issuecount);
+        setSolvedTicket(solvedArr);
+        setUnsolvedTickets(unSolveArr);
+        // console.log(solvedTickets);
 
         setTownships(township_arr);
         if (response.data.sites[0].expireDate == null) {
@@ -246,6 +260,8 @@ const FiberDashboard = ({ navigation }) => {
         }
 
         setData(response.data);
+
+        setTempData(response.data);
         setInternetPlan(response.data.sites[0].internetPlan.name);
         setIssueCount(ticketcount);
         setSolvedCount(solvedcount);
@@ -339,9 +355,10 @@ const FiberDashboard = ({ navigation }) => {
 
     if (item.value) {
       var searchdata = this.searching(item.value);
-      setTempData(searchdata);
-
-      var paymentarr = tempData[0].payment;
+      // console.log(searchdata[0].payment);
+      // setTempData(searchdata);
+      // console.log(tempData.sites[0].payment);
+      var paymentarr = searchdata[0].payment;
 
       var paymenarrlen = paymentarr.length;
       // console.log(paymenarrlen);
@@ -354,28 +371,33 @@ const FiberDashboard = ({ navigation }) => {
           }
         });
       }
-      // console.log(this.state.tempData[0].tickets.length)
-      var ticketarr = tempData[0].tickets;
+
+      var ticketarr = searchdata[0].tickets;
+      // console.log(ticketarr);
       var ticketcount = ticketarr.length;
-      // alert(this.state.tempData[0].expireDate);
       var solvedcount = 0;
       var issuecount = 0;
+      var solvedArr = [];
+      var unSolveArr = [];
       if (ticketcount > 0) {
         ticketarr.map((data, index) => {
-          // console.log(data)
           if (data.solved == true) {
             solvedcount = solvedcount + 1;
+            solvedArr.push(data);
           } else {
             issuecount = issuecount + 1;
+            unSolveArr.push(data);
           }
         });
       }
-      // AsyncStorage.removeItem("siteId");
-      // AsyncStorage.removeItem("siteCode");
+
+      // console.log(issuecount);
+      setSolvedTicket(solvedArr);
+      setUnsolvedTickets(unSolveArr);
       AsyncStorage.multiSet(
         [
-          ["siteId", tempData[0].siteId],
-          ["siteCode", tempData[0].siteCode],
+          ["siteId", searchdata[0].siteId],
+          ["siteCode", searchdata[0].siteCode],
         ],
         (err) => {
           if (err) {
@@ -388,16 +410,18 @@ const FiberDashboard = ({ navigation }) => {
           }
         }
       );
-      // console.log("Hello",tempData[0].expireDate);
-      if (tempData[0].expireDate == null) {
+      // console.log("Hello",searchdata[0].expireDate);
+      if (searchdata[0].expireDate == null) {
         setOpenExpireModal(false);
       } else {
         var msDiff =
-          new Date(tempData[0].expireDate).getTime() - new Date().getTime(); //Future date - current date
+          new Date(searchdata[0].expireDate).getTime() - new Date().getTime(); //Future date - current date
         var day_diff = Math.floor(msDiff / (1000 * 60 * 60 * 24));
         // console.log(day_diff);
         if (day_diff < 3) {
-          self.setState({ isOpenExpireModal: true, diff: day_diff });
+          // self.setState({ isOpenExpireModal: true, diff: day_diff });
+          setOpenExpireModal(true);
+          setDiff(day_diff);
         } else {
           setOpenExpireModal(false);
         }
@@ -405,32 +429,35 @@ const FiberDashboard = ({ navigation }) => {
 
       setTownship({ value: item.value, label: item.label });
       setSiteCode(item.value);
-      setDate(tempData[0].installedDate);
-      setUsedDay(tempData[0].usedDay);
-      setMaterials(tempData[0].materials.length);
+      setDate(searchdata[0].installedDate);
+      setUsedDay(searchdata[0].usedDay);
+      setMaterials(searchdata[0].materials.length);
       setInternetPlan(
-        tempData[0].internetPlan ? tempData[0].internetPlan.name : ""
+        searchdata[0].internetPlan ? searchdata[0].internetPlan.name : ""
       );
       setTotal(totalamount);
-      setExpireDate(tempData[0].expireDate);
+      setExpireDate(searchdata[0].expireDate);
       setIssue(issuecount);
       setSolved(solvedcount);
-      setMaterialList(tempData[0].materials);
-      setPaymentList(tempData[0].payment);
+      setSolvedCount(solvedcount);
+      setMaterialList(searchdata[0].materials);
+      setPaymentList(searchdata[0].payment);
       setServiceType(
-        tempData[0].internetPlan
-          ? tempData[0].internetPlan.serviceType.stype
+        searchdata[0].internetPlan
+          ? searchdata[0].internetPlan.serviceType.stype
           : ""
       );
-      setSiteId(tempData[0].siteId);
+      setSiteId(searchdata[0].siteId);
       setActualBandwidth(
-        tempData[0].internetPlan ? tempData[0].internetPlan.actualBandwidth : ""
+        searchdata[0].internetPlan
+          ? searchdata[0].internetPlan.actualBandwidth
+          : ""
       );
       setTicketArr(ticketarr);
       setPlanId(
-        tempData[0].internetPlan ? tempData[0].internetPlan.planId : ""
+        searchdata[0].internetPlan ? searchdata[0].internetPlan.planId : ""
       );
-      setStatus(tempData[0].status);
+      setStatus(searchdata[0].status);
     }
   };
 
@@ -454,6 +481,40 @@ const FiberDashboard = ({ navigation }) => {
     setRefreshing(true);
     this.getCustInfo();
   };
+
+  // async function registerForPushNotificationsAsync() {
+  //   let token;
+
+  //   if (Platform.OS === "android") {
+  //     await Notifications.setNotificationChannelAsync("default", {
+  //       name: "default",
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: "#FF231F7C",
+  //     });
+  //   }
+  //   const { status: existingStatus } =
+  //     await Notifications.getPermissionsAsync();
+  //   let finalStatus = existingStatus;
+  //   if (existingStatus !== "granted") {
+  //     const { status } = await Notifications.requestPermissionsAsync();
+  //     finalStatus = status;
+  //   }
+  //   if (finalStatus !== "granted") {
+  //     alert("Failed to get push token for push notification!");
+  //     return;
+  //   }
+  //   // Learn more about projectId:
+  //   // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
+  //   token = (
+  //     await Notifications.getExpoPushTokenAsync({
+  //       projectId: "your-project-id",
+  //     })
+  //   ).data;
+  //   console.log(token);
+
+  //   return token;
+  // }
 
   return isLoading ? (
     <View style={styles.container}>
@@ -615,6 +676,7 @@ const FiberDashboard = ({ navigation }) => {
                 icon_height={50}
                 header={t("install_date")}
                 label={Moment(installDate).format("DD/MM/YYYY")}
+                onPressBtn={() => null}
               />
               <CardView
                 icon_name="calendar"
@@ -622,6 +684,7 @@ const FiberDashboard = ({ navigation }) => {
                 icon_height={50}
                 header={t("total_using")}
                 label={ChangeDateFormat(usedDay)}
+                onPressBtn={() => null}
               />
             </View>
             <View
@@ -687,6 +750,7 @@ const FiberDashboard = ({ navigation }) => {
                 label={
                   expiredate ? Moment(expiredate).format("DD-MM-YYYY") : "-"
                 }
+                onPressBtn={() => null}
               />
             </View>
             <View
@@ -702,11 +766,12 @@ const FiberDashboard = ({ navigation }) => {
                 icon_height={50}
                 header={t("service_ticket")}
                 type="ticket"
-                issue_count={issue_count}
+                issue_count={issue}
                 solved_count={solved_count}
                 onPressBtn={() =>
                   navigation.navigate("TicketNavigator", {
-                    data: ticketArr,
+                    solvedTickets: solvedTickets,
+                    unSolveTickets: unSolveTickets,
                     site_code: sitecode ? sitecode : data.sites[0].siteCode,
                   })
                 }

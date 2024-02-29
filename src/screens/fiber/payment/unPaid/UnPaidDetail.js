@@ -83,8 +83,8 @@ class UnPaidDetail extends React.Component {
 
   componentDidMount = async () => {
     initializeLocalization();
-    var expo_token = await this.registerForPushNotificationsAsync();
-    this.setState({ expoPushToken: expo_token });
+    // var expo_token = await this.registerForPushNotificationsAsync();
+    this.setState({ expoPushToken: null });
 
     await this.getSiteCode();
     await this.payShowHideStatus();
@@ -160,36 +160,36 @@ class UnPaidDetail extends React.Component {
     this.props.navigation.navigate("PaySuccess");
   };
 
-  async registerForPushNotificationsAsync() {
-    let token;
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    // alert(existingStatus);
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync({
-        allowSystemDialog: true,
-      });
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      // alert("Failed to get push token for push notification!");
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    // this.setState({ expoPushToken: token });
+  // async registerForPushNotificationsAsync() {
+  //   let token;
+  //   const { status: existingStatus } =
+  //     await Notifications.getPermissionsAsync();
+  //   let finalStatus = existingStatus;
+  //   // alert(existingStatus);
+  //   if (existingStatus !== "granted") {
+  //     const { status } = await Notifications.requestPermissionsAsync({
+  //       allowSystemDialog: true,
+  //     });
+  //     finalStatus = status;
+  //   }
+  //   if (finalStatus !== "granted") {
+  //     // alert("Failed to get push token for push notification!");
+  //     return;
+  //   }
+  //   token = (await Notifications.getExpoPushTokenAsync()).data;
+  //   // this.setState({ expoPushToken: token });
 
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
+  //   if (Platform.OS === "android") {
+  //     Notifications.setNotificationChannelAsync("default", {
+  //       name: "default",
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: "#FF231F7C",
+  //     });
+  //   }
 
-    return token;
-  }
+  //   return token;
+  // }
 
   _handleOpen() {
     if (this.state.response_invDate != this.state.lower_date) {
@@ -433,7 +433,7 @@ class UnPaidDetail extends React.Component {
         <View style={styles.container}>
           <FiberHeader
             backgroundColor="#337ab7"
-            headerText="payment_detail"
+            headerText={t("payment_detail")}
             routeName="Dashboard"
             onPress={() => this.props.navigation.navigate("PaymentNavigator")}
           />

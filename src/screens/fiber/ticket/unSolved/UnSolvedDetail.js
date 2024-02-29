@@ -37,13 +37,29 @@ class UnSolvedDetail extends React.Component {
       isOpenSuccessModel: false,
       locale: "",
     };
-    this.BackHandler = null;
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   componentDidMount = async () => {
     await this._getUnsolvedTicketDetail();
     await this._getSiteCode();
     initializeLocalization();
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
   };
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
 
   _getUnsolvedTicketDetail = async () => {
     var self = this;

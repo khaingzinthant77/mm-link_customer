@@ -28,7 +28,6 @@ export default class NotiList extends React.Component {
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   async componentDidMount() {
-    const self = this;
     this.setState({ isLoading: true }); // Start page loading
     this.getAllNoti(this.page);
     BackHandler.addEventListener(
@@ -50,11 +49,15 @@ export default class NotiList extends React.Component {
   }
 
   getAllNoti(page) {
-    console.log(NEWS_API_END_POINT);
-    // console.log(NEWS_API_END_POINT+"/news?page=" + page)
+    // console.log(NEWS_API_END_POINT);
+    console.log(NEWS_API_END_POINT + "/news?page=" + page);
     const self = this; // *
     axios
-      .get(NEWS_API_END_POINT + "/news?page=" + page)
+      .get(NEWS_API_END_POINT + "/news?page=" + page, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then(function (response) {
         // console.log(response.data.data)
         self.setState({
@@ -68,7 +71,7 @@ export default class NotiList extends React.Component {
         });
       })
       .catch(function (error) {
-        console.log(error);
+        console.log("here", error);
         self.setState({
           isLoading: false,
           refreshing: false,
@@ -116,7 +119,7 @@ export default class NotiList extends React.Component {
       <View style={styles.container}>
         <FiberHeader
           backgroundColor="#337ab7"
-          headerText="notification"
+          headerText="Notification"
           routeName="Dashboard"
           onPress={() => this.props.navigation.goBack(null)}
         />

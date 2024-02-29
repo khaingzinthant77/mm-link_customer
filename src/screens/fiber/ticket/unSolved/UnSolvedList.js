@@ -25,7 +25,6 @@ import { initializeLocalization } from "@services/i18n";
 
 //import date Format
 import Moment from "moment";
-import axios from "axios";
 
 class UnsolvedList extends React.Component {
   constructor(props) {
@@ -33,9 +32,9 @@ class UnsolvedList extends React.Component {
     this.state = {
       unsolved: 0,
       data: [],
-      refreshing: true,
+      refreshing: false,
       status: null,
-      loading: true,
+      loading: false,
       siteId: "",
       locale: "",
       cust_info: null,
@@ -43,12 +42,6 @@ class UnsolvedList extends React.Component {
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   componentDidMount = async () => {
-    await this.getCustomerInfo();
-    // await
-    this.setState({ loading: true });
-    const siteCode = await AsyncStorage.getItem("siteCode");
-    // alert(siteCode)
-    this.setState({ siteCode: siteCode });
     initializeLocalization();
     BackHandler.addEventListener(
       "hardwareBackPress",
@@ -68,64 +61,17 @@ class UnsolvedList extends React.Component {
     return true;
   }
 
-  getCustomerInfo = async () => {
-    var self = this;
-    const value = await AsyncStorage.getItem("access_token");
-    const cus_id = await AsyncStorage.getItem("cusId");
-    // console.log(value)
-    let bodyParam = {
-      cusId: cus_id,
-      period: null,
-      status: null,
-      filterDate: "voucherDate",
-    };
-    axios
-      .post(unsolvedApi, bodyParam, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + value,
-        },
-      })
-      .then(function (response) {
-        if (response.status == 200) {
-          // console.log("Unsolve Ticket List",response.data[0]);
-          var unsolvedCount = 0;
-          var unsolvedArr = [];
-          if (response.data.length > 0) {
-            response.data.map((data, index) => {
-              if (
-                data.siteCode == self.state.siteCode &&
-                data.solved == false
-              ) {
-                unsolvedCount = unsolvedCount + 1;
-                self.setState({ unsolved: unsolvedCount });
-                unsolvedArr.push(data);
-              }
-            });
-          }
-          // console.log('Hello',unsolvedArr[0]);
-          self.setState({
-            data: unsolvedArr,
-            cust_info: response.data[0],
-            refreshing: false,
-            loading: false,
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
   onRefresh = () => {
     this.setState({
       data: [],
       refreshing: false,
     });
-    this.getCustomerInfo();
   };
 
   render() {
     const { t } = this.props;
+    const { initialParam } = this.props.route.params;
+    // console.log(initialParam);
     if (this.state.loading) {
       return (
         <ActivityIndicator
@@ -160,34 +106,32 @@ class UnsolvedList extends React.Component {
             />
           }
         >
-          {this.state.data.length > 0 ? (
-            this.state.data.map((data, index) => {
-              // console.log(data)
-              if (data.siteCode == this.state.siteCode) {
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate("UnsolvedTicketDetail", {
-                        data: data,
-                        routeName: "UnsolvedList",
-                      })
+          {initialParam.length > 0 ? (
+            initialParam.map((data, index) => {
+              // console.log(data);
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("UnSolvedDetail", {
+                      data: data,
+                      routeName: "UnsolvedList",
+                    })
+                  }
+                  key={index}
+                >
+                  <TicketCard
+                    number={index + 1}
+                    date={
+                      data.cat
+                        ? Moment(data.cat).format("DD-MM-Y hh:mm A")
+                        : "-"
                     }
-                    key={index}
-                  >
-                    <TicketCard
-                      number={index + 1}
-                      date={
-                        data.cat
-                          ? Moment(data.cat).format("DD-MM-Y hh:mm A")
-                          : "-"
-                      }
-                      issue={data.issueType}
-                      problem={data.description}
-                      status="unsolve"
-                    />
-                  </TouchableOpacity>
-                );
-              }
+                    issue={data.issueType}
+                    problem={data.description}
+                    status="unsolve"
+                  />
+                </TouchableOpacity>
+              );
             })
           ) : (
             <View></View>

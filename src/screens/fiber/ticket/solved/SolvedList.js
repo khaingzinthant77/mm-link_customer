@@ -70,7 +70,7 @@ class SolvedList extends React.Component {
     var self = this;
     const value = await AsyncStorage.getItem("access_token");
     const cus_id = await AsyncStorage.getItem("cusId");
-    // console.log(value)
+    console.log(cus_id);
     let bodyParam = {
       cusId: cus_id,
       period: null,
@@ -119,6 +119,8 @@ class SolvedList extends React.Component {
 
   render() {
     const { t } = this.props;
+    const { initialParam } = this.props.route.params;
+    // console.log(initialParam);
     if (this.state.loading) {
       return (
         <ActivityIndicator
@@ -152,30 +154,26 @@ class SolvedList extends React.Component {
             />
           }
         >
-          {this.state.data.length > 0 ? (
-            this.state.data.map((data, index) => {
-              // console.log(data.siteId)
-              if (data.siteCode == this.state.siteCode) {
-                // console.log(data);
-                return (
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate("SolvedTicketDetail", {
-                        data: data,
-                      })
-                    }
-                    key={index}
-                  >
-                    <TicketCard
-                      number={i}
-                      date={Moment(data.solvedAt).format("D-MM-Y hh:mm A")}
-                      issue={data.issueType}
-                      problem={data.description}
-                      status="solve"
-                    />
-                  </TouchableOpacity>
-                );
-              }
+          {initialParam.length > 0 ? (
+            initialParam.map((data, index) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("SolvedDetail", {
+                      data: data,
+                    })
+                  }
+                  key={index}
+                >
+                  <TicketCard
+                    number={i}
+                    date={Moment(data.solvedAt).format("D-MM-Y hh:mm A")}
+                    issue={data.ticketIssueType.issueType}
+                    problem={data.remark}
+                    status="solve"
+                  />
+                </TouchableOpacity>
+              );
             })
           ) : (
             <View></View>

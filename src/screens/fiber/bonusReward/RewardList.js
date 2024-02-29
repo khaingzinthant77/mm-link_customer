@@ -61,7 +61,7 @@ const RewardList = ({ navigation }) => {
   useEffect(() => {
     fetchData();
     const backAction = () => {
-      navigation.navigate("Dashboard", { type: "fiber" });
+      navigation.navigate("FiberDashboard");
       return true; // Prevent default behavior (exit the app)
     };
 

@@ -32,13 +32,30 @@ class SolvedDetail extends React.Component {
       access_token: null,
       locale: "",
     };
-    this.backHandler = null;
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   componentDidMount = async () => {
     initializeLocalization();
     await this._retrieveToken();
     await this.getCustomerInfo();
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
   };
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
+
   _retrieveToken = async () => {
     try {
       if (value !== null) {
