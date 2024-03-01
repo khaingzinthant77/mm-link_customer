@@ -85,8 +85,8 @@ class UnPaidDetail extends React.Component {
 
   componentDidMount = async () => {
     initializeLocalization();
-    var expo_token = await this.registerForPushNotificationsAsync();
-    this.setState({ expoPushToken: expo_token });
+    // var expo_token = await this.registerForPushNotificationsAsync();
+    this.setState({ expoPushToken: null });
 
     await this.getSiteCode();
     await this.payShowHideStatus();
@@ -162,35 +162,35 @@ class UnPaidDetail extends React.Component {
     this.props.navigation.navigate("PaySuccess");
   };
 
-  registerForPushNotificationsAsync = async () => {
-    let token;
+  // registerForPushNotificationsAsync = async () => {
+  //   let token;
 
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
+  //   if (Platform.OS === "android") {
+  //     Notifications.setNotificationChannelAsync("default", {
+  //       name: "default",
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: "#FF231F7C",
+  //     });
+  //   }
 
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
-      return;
-    }
-    token = await Notifications.getExpoPushTokenAsync({
-      projectId: Constants.expoConfig.extra.eas.projectId,
-    });
+  //   const { status: existingStatus } =
+  //     await Notifications.getPermissionsAsync();
+  //   let finalStatus = existingStatus;
+  //   if (existingStatus !== "granted") {
+  //     const { status } = await Notifications.requestPermissionsAsync();
+  //     finalStatus = status;
+  //   }
+  //   if (finalStatus !== "granted") {
+  //     alert("Failed to get push token for push notification!");
+  //     return;
+  //   }
+  //   token = await Notifications.getExpoPushTokenAsync({
+  //     projectId: Constants.expoConfig.extra.eas.projectId,
+  //   });
 
-    return token.data;
-  };
+  //   return token.data;
+  // };
 
   _handleOpen() {
     if (this.state.response_invDate != this.state.lower_date) {
@@ -263,6 +263,7 @@ class UnPaidDetail extends React.Component {
         });
       })
       .catch((err) => {
+        alert("get site code ", err);
         console.log("Error get Sitecode api ", err);
         self.setState({ refreshing: false });
       });
@@ -429,36 +430,36 @@ class UnPaidDetail extends React.Component {
 
   render() {
     const { t } = this.props;
-    if (this.state.refreshing) {
-      return (
-        <View style={styles.container}>
-          <FiberHeader
-            backgroundColor="#337ab7"
-            headerText="Payment Detail"
-            routeName="Dashboard"
-            onPress={() => this.props.navigation.navigate("PaymentNavigator")}
-          />
-          <View style={styles.loadingView}>
-            <ActivityIndicator size="large" color="#1179C2" />
-          </View>
-        </View>
-      );
-    }
-    if (this.state.show_loading) {
-      return (
-        <View style={styles.container}>
-          <FiberHeader
-            backgroundColor="#337ab7"
-            headerText="Payment Detail"
-            routeName="Dashboard"
-            onPress={() => this.props.navigation.navigate("PaymentNavigator")}
-          />
-          <View style={styles.loadingView}>
-            <ActivityIndicator size="large" color="#1179C2" />
-          </View>
-        </View>
-      );
-    }
+    // if (this.state.refreshing) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <FiberHeader
+    //         backgroundColor="#337ab7"
+    //         headerText="Payment Detail"
+    //         routeName="Dashboard"
+    //         onPress={() => this.props.navigation.navigate("PaymentNavigator")}
+    //       />
+    //       <View style={styles.loadingView}>
+    //         <ActivityIndicator size="large" color="#1179C2" />
+    //       </View>
+    //     </View>
+    //   );
+    // }
+    // if (this.state.show_loading) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <FiberHeader
+    //         backgroundColor="#337ab7"
+    //         headerText="Payment Detail"
+    //         routeName="Dashboard"
+    //         onPress={() => this.props.navigation.navigate("PaymentNavigator")}
+    //       />
+    //       <View style={styles.loadingView}>
+    //         <ActivityIndicator size="large" color="#1179C2" />
+    //       </View>
+    //     </View>
+    //   );
+    // }
     return (
       <View style={styles.container}>
         {this.state.show_status == 1 &&

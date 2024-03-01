@@ -124,6 +124,12 @@ import RewardDetail from "@screens/fiber/bonusReward/RewardDetail";
 //reward history list
 import HistoryList from "@screens/fiber/bonusHistory/HistoryList";
 import ExternalChat from "@screens/home/ExternalChat";
+//payment noti detail
+import PaymentNotiDetail from "@screens/fiber/payment/PaymentNotiDetail";
+//news noti detail
+import NewsNotiDetail from "@screens/fiber/noti/NewsNotiDetail";
+//payment success
+import PaySuccess from "@screens/fiber/payment/PaySuccess";
 function RootNavigator() {
   return (
     <Stack.Navigator>
@@ -520,6 +526,27 @@ function RootNavigator() {
       <Stack.Screen
         name="ExternalChat"
         component={ExternalChat}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="PaymentNotiDetail"
+        component={PaymentNotiDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="NewsNotiDetail"
+        component={NewsNotiDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="PaySuccess"
+        component={PaySuccess}
         options={{
           headerShown: false,
         }}

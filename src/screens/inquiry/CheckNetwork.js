@@ -66,6 +66,7 @@ export default class CheckNetwork extends React.Component {
       // console.log(location);
       this.setState({ location });
     } catch (err) {
+      alert(err);
       this.setState({ errorMessage: err });
       // console.log("Error in getLocation", err);
     }

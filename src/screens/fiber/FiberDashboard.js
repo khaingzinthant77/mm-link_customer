@@ -543,6 +543,8 @@ const FiberDashboard = ({ navigation }) => {
       })
     ).data;
 
+    // console.log(token);
+
     return token;
   }
 
