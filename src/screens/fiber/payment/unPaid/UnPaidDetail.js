@@ -85,8 +85,8 @@ class UnPaidDetail extends React.Component {
 
   componentDidMount = async () => {
     initializeLocalization();
-    // var expo_token = await this.registerForPushNotificationsAsync();
-    this.setState({ expoPushToken: null });
+    var expo_token = await AsyncStorage.getItem("token");
+    this.setState({ expoPushToken: expo_token });
 
     await this.getSiteCode();
     await this.payShowHideStatus();

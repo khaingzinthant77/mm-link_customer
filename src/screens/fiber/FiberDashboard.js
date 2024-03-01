@@ -351,6 +351,7 @@ const FiberDashboard = ({ navigation }) => {
 
   _storeToken = async (phone, user_name, info_arr) => {
     var token = await registerForPushNotificationsAsync();
+    await AsyncStorage.setItem("token", token);
     var appuser = {
       phone: phone,
       user_name: user_name,
