@@ -4,8 +4,8 @@ import * as RootNavigation from "./RootNavigation.js";
 import { navigationRef, isReadyRef } from "./RootNavigation";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-
 import { StatusBar } from "expo-status-bar";
+import * as Linking from "expo-linking";
 //import screen
 import RootNavigator from "@navigators/RootNavigator";
 //import color
@@ -14,6 +14,22 @@ import Colors from "@styles/Colors";
 import * as Font from "expo-font";
 import { initializeLocalization } from "./src/services/i18n";
 import * as Notifications from "expo-notifications";
+
+const config = {
+  screens: {
+    KBZReturn: {
+      path: "kbz",
+      parse: {
+        invoiceId: (id) => `${id}`,
+      },
+    },
+  },
+};
+
+const linking = {
+  prefixes: [Linking.createURL("/")],
+  config,
+};
 
 const App = ({}) => {
   const [font_loaded, setFontLoaded] = useState(false);
@@ -76,6 +92,7 @@ const App = ({}) => {
   return (
     <NavigationContainer
       ref={navigationRef}
+      linking={linking}
       onReady={() => {
         isReadyRef.current = true;
       }}
